@@ -33,11 +33,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column]
-    private ?float $balance = null;
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $balance = 0.0;
 
-    #[ORM\Column(length: 255)]
-    private ?string $profile_picture = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profile_picture = 'default.jpg';
 
     public function getId(): ?int
     {
@@ -119,7 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->balance;
     }
 
-    public function setBalance(float $balance): static
+    public function setBalance(?float $balance): ?static
     {
         $this->balance = $balance;
 
