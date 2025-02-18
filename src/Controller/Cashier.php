@@ -6,26 +6,26 @@
 
     public $shoppinglist;
 
-    public function __construct($id, $pseudo, $price, $image) {
+    public function __construct($id, $pseudo, $orders, $image) {
         $this->id = $id;
         $this->pseudo = $pseudo;
-        $this->price = $price;
+        $this->orders = $orders;
         $this->image = $image;
     }
 
     public function ShowDetails() {
         echo "Marque: " . $this->id . "<br>";
         echo "Modèle: " . $this->pseudo . "<br>";
-        echo "Prix: " . $this->price . "<br>";
+        echo "Prix: " . $this->orders . "<br>";
         echo "Image: " . $this->image . "<br>";
     }
 
     public function getPrice() {
-        return $this->price;
+        return $this->orders;
     }
 
-    public function setPrice($price) {
-        $this->price = $price;
+    public function setPrice($orders) {
+        $this->orders = $orders;
     }
 }
 
