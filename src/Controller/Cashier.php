@@ -16,7 +16,7 @@
     public function ShowDetails() {
         echo "Marque: " . $this->id . "<br>";
         echo "Modèle: " . $this->pseudo . "<br>";
-        echo "Année: " . $this->price . "<br>";
+        echo "Prix: " . $this->price . "<br>";
         echo "Image: " . $this->image . "<br>";
     }
 
