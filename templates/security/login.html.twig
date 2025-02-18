@@ -9,6 +9,29 @@
 {% endblock %}
 
 {% block body %}
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="#" class="logo">
+                    <span class="logo-e">E-</span><span class="logo-discount">Discount</span>
+                </a>
+                <nav class="main-nav">
+                    <a href="#">Accueil</a>
+                    <a href="#">Articles</a>
+                    <a href="#">Vendres</a>
+                </nav>
+            </div>
+            <div class="header-right">
+                <a href="#" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+                <a href="{{ path('app_login') }}" class="user-icon">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
     <div class="login-container">
         <h1>Bienvenue !</h1>
         <p>Connectez-vous pour accéder à votre compte</p>
@@ -21,7 +44,7 @@
             {% endif %}
 
             <div class="form-group">
-                <label for="username">Adresse email :</label>
+                <label for="username">ADRESSE MAIL :</label>
                 <input 
                     type="email" 
                     value="{{ last_username }}" 
@@ -29,30 +52,27 @@
                     id="username" 
                     required 
                     autofocus
-                    placeholder="Entrez votre email"
                 >
             </div>
 
             <div class="form-group">
-                <label for="password">Mot de passe :</label>
+                <label for="password">MOT DE PASSE :</label>
                 <input 
                     type="password" 
                     name="_password" 
                     id="password" 
                     required
-                    placeholder="Entrez votre mot de passe"
                 >
             </div>
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            <button type="submit">Se connecter</button>
+            <button type="submit">Login</button>
         </form>
 
         <div class="additional-links">
-            <a href="{{ path('app_register') }}">Créer un compte</a>
-            <span class="separator">•</span>
-            <a href="#">Mot de passe oublié ?</a>
+            <a href="{{ path('app_register') }}">REGISTER</a>
+            <a href="#">MOT DE PASSE OUBLIÉ ?</a>
         </div>
     </div>
 {% endblock %}
