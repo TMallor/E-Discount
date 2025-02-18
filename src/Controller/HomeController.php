@@ -18,6 +18,7 @@ final class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/button-action', name: 'button_action', methods: ['GET', 'POST'])]
     public function buttonAction(Request $request): Response
     {
         $action = $request->query->get('action') ?? $request->request->get('action');
