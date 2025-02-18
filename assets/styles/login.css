@@ -1,0 +1,129 @@
+/* Variables CSS */
+:root {
+    --primary-color: #6B7280;
+    --primary-hover: #4B5563;
+    --background-color: #FFFFFF;
+    --text-color: #111827;
+    --border-color: #D1D5DB;
+}
+
+.page-login {
+    min-height: 100vh;
+    background-color: var(--background-color);
+    padding: 20px;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.logo {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.logo img {
+    max-width: 100px;
+    height: auto;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+p {
+    color: var(--primary-color);
+    margin-bottom: 24px;
+    font-size: 16px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-color);
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.1);
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--primary-hover);
+}
+
+.additional-links {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.additional-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.additional-links a:hover {
+    text-decoration: underline;
+}
+
+.separator {
+    margin: 0 8px;
+    color: var(--border-color);
+}
+
+.alert-danger {
+    background-color: #FEE2E2;
+    color: #991B1B;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 16px;
+    }
+    
+    .additional-links {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .separator {
+        display: none;
+    }
+} 
