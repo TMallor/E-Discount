@@ -1,4 +1,4 @@
-
+/templates/home/hometest.html.twig
 ###> symfony/framework-bundle ###
 /.env
 /.env.local
