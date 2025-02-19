@@ -26,18 +26,15 @@
 }
 
 .error-code span {
-    font-size: 8rem;
+    font-size: 20rem;
     font-weight: 700;
     color: var(--text-color);
     line-height: 1;
-    user-select: none; /* Empêche la sélection du texte */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+    user-select: none;
 }
 
 .error-code .first-digit {
-    color: var(--primary-color);
+    color: #6366F1;
 }
 
 .error-code::before {
@@ -78,18 +75,6 @@
 
 .back-home:hover {
     background-color: var(--primary-hover);
-}
-
-.error-number {
-    font-size: 10rem;
-    font-weight: 700;
-    color: var(--text-color);
-    margin-bottom: 2rem;
-    user-select: none;
-}
-
-.error-number .first-digit {
-    color: #6366F1;
 }
 
 /* Style responsive */
