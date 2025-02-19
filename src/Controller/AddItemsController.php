@@ -11,6 +11,6 @@ class AddItemsController extends AbstractController
     #[Route('/additems', name: 'additems')]
     public function index(): Response
     {
-        return $this->render('additems/index.html.twig');
+        return $this->render('additems/additems.html.twig');
     }
 } 

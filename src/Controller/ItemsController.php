@@ -11,6 +11,6 @@ class ItemsController extends AbstractController
     #[Route('/items', name: 'items')]
     public function index(): Response
     {
-        return $this->render('items/index.html.twig');
+        return $this->render('items/items.html.twig');
     }
 } 
