@@ -7,28 +7,7 @@
 {% endblock %}
 
 {% block body %}
-    <header class="main-header">
-        <div class="header-content">
-            <div class="header-left">
-                <a href="{{ path('home') }}" class="logo">
-                    <span class="logo-e">E-</span><span class="logo-discount">Discount</span>
-                </a>
-                <nav class="main-nav">
-                    <a href="{{ path('home') }}" class="active">Accueil</a>
-                    <a href="#">Articles</a>
-                    <a href="#">Ventes</a>
-                </nav>
-            </div>
-            <div class="header-right">
-                <a href="#" class="cart-icon">
-                    <i class="fas fa-shopping-cart"></i>
-                </a>
-                <a href="{{ path('app_login') }}" class="user-icon">
-                    <i class="fas fa-user"></i>
-                </a>
-            </div>
-        </div>
-    </header>
+    {% include 'header.html.twig' %}
 
     <main class="main-content">
         <section class="hero-section">
@@ -92,4 +71,4 @@
             </div>
         </section>
     </main>
-{% endblock %} 
+{% endblock %}
