@@ -3,34 +3,7 @@
 {% block title %}Articles - E-Discount{% endblock %}
 
 {% block body %}
-    <header class="main-header">
-    <div class="header-content">
-        <div class="header-left">
-            <a href="#" class="logo">
-                <span class="logo-e">E-</span><span class="logo-discount">Discount</span>
-            </a>
-            <nav class="main-nav">
-                <a href="{{ path('home') }}">Accueil</a>
-                <a href="{{ path('items') }}">Articles</a>
-                <a href="{{ path('additems') }}">Vendres</a>
-            </nav>
-        </div>
-        <div class="header-right">
-            <a href="{{ path('cart') }}" class="cart-icon">
-                <i class="fas fa-shopping-cart"></i>
-            </a>
-            {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('app_profile') }}" class="user-icon">
-                    <i class="fas fa-user"></i>
-                </a>
-            {% else %}
-                <a href="{{ path('app_login') }}" class="user-icon">
-                    <i class="fas fa-user"></i>
-                </a>
-            {% endif %}
-        </div>
-    </div>
-</header>
+   {% include 'header.html.twig' %}
     <div class="main-content">
         <h1>Articles</h1>
         <!-- Contenu à venir -->
