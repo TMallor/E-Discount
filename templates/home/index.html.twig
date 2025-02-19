@@ -1,26 +1,74 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}E-Discount - Accueil{% endblock %}
+
+{% block page_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/styles/home.css') }}">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {% include 'header.html.twig' %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <main class="main-content">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Découvrez nos produits</h1>
+                <p>Les meilleures offres au meilleur prix</p>
+                <a href="#" class="cta-button">Voir tous les articles</a>
+            </div>
+        </section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/elion/E-Discount/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>C:/Users/elion/E-Discount/templates/home/index.html.twig</code></li>
-    </ul>
+        <section class="featured-products">
+            <h2>Nos produits vedettes</h2>
+            <div class="product-grid">
+                <!-- Premier produit -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{{ asset('images/placeholder.jpg') }}" alt="Maillot">
+                    </div>
+                    <div class="product-info">
+                        <h3>Maillot de Sport</h3>
+                        <p class="price">29.99 €</p>
+                        <button class="add-to-cart">Ajouter au panier</button>
+                    </div>
+                </div>
 
-    <form action="{{ path('button_action') }}" method="post">
-        <button type="submit" name="action" value="action1" class="btn btn-primary">Button 1</button>
-        <button type="submit" name="action" value="action2" class="btn btn-secondary">Button 2</button>
-    </form>
+                <!-- Deuxième produit -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{{ asset('images/placeholder.jpg') }}" alt="Short">
+                    </div>
+                    <div class="product-info">
+                        <h3>Short de Sport</h3>
+                        <p class="price">19.99 €</p>
+                        <button class="add-to-cart">Ajouter au panier</button>
+                    </div>
+                </div>
 
-</div>
+                <!-- Troisième produit -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{{ asset('images/placeholder.jpg') }}" alt="Chaussures">
+                    </div>
+                    <div class="product-info">
+                        <h3>Chaussures de Sport</h3>
+                        <p class="price">49.99 €</p>
+                        <button class="add-to-cart">Ajouter au panier</button>
+                    </div>
+                </div>
+
+                <!-- Quatrième produit -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{{ asset('images/placeholder.jpg') }}" alt="Ballon">
+                    </div>
+                    <div class="product-info">
+                        <h3>Ballon de Football</h3>
+                        <p class="price">15.99 €</p>
+                        <button class="add-to-cart">Ajouter au panier</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}

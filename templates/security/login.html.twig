@@ -6,52 +6,40 @@
 
 {% block page_stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/styles/login.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
     {% include 'header.html.twig' %}
-    <div class="login-wrapper">
-        <h1>Bienvenue !</h1>
-        <p>Connectez-vous pour accéder à votre compte</p>
-        <div class="login-container"></div>
-        <div class="login-container-content">
+    
+    <div class="container" id="container">
+        <div class="form-container sign-in-container">
             <form method="post">
+                <h1>Connexion</h1>
+                
                 {% if error %}
                     <div class="alert alert-danger">
                         {{ error.messageKey|trans(error.messageData, 'security') }}
                     </div>
-                {% endif %}
-
-                <div class="form-group">
-                    <label for="username">ADRESSE MAIL :</label>
-                    <input 
-                        type="email" 
-                        value="{{ last_username }}" 
-                        name="_username" 
-                        id="username" 
-                        required 
-                        autofocus
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="password">MOT DE PASSE :</label>
-                    <input 
-                        type="password" 
-                        name="_password" 
-                        id="password" 
-                        required
-                    >
-                    <a href="/register" class="register-link">REGISTER</a>
-
-                </div>
-
+                {% endif %}         
+                <input type="email" value="{{ last_username }}" name="_username" id="username" required autofocus placeholder="Email">
+                <input type="password" name="_password" id="password" required placeholder="Mot de passe">
+                
+                <a href="#">Mot de passe oublié ?</a>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                <button type="submit">Login</button>
+                
+                <button type="submit">Connexion</button>
             </form>
-
         </div>
-
+        
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-right">
+                    <h1>Bonjour !</h1>
+                    <p>Entrez vos informations personnelles et commencez votre voyage avec nous</p>
+                    <a href="{{ path('app_register') }}" class="ghost">S'inscrire</a>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

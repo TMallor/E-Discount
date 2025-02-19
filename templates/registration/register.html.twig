@@ -1,38 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block page_stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/styles/register.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
 {% endblock %}
+
 {% block body %}
-    <div class="form-container">
-        <div class="form-box">
-            <h1>Register</h1>
-
-            {{ form_start(registrationForm) }}
-            {{ form_errors(registrationForm) }}
-
-            <div class="form-group">
-                {{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(registrationForm.email) }}
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="#" class="logo">
+                    <span class="logo-e">E-</span><span class="logo-discount">Discount</span>
+                </a>
+                <nav class="main-nav">
+                    <a href="#">Accueil</a>
+                    <a href="#">Articles</a>
+                    <a href="#">Vendre</a>
+                </nav>
             </div>
-
-            <div class="form-group">
-                {{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(registrationForm.plainPassword) }}
+            <div class="header-right">
+                <a href="#" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+                <a href="{{ path('app_login') }}" class="user-icon">
+                    <i class="fas fa-user"></i>
+                </a>
             </div>
+        </div>
+    </header>
 
-            <div class="form-group form-check">
-                {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
-                {{ form_label(registrationForm.agreeTerms, 'I agree to the terms', {'label_attr': {'class': 'form-check-label'}}) }}
-                {{ form_errors(registrationForm.agreeTerms) }}
-            </div>
-
-            <button type="submit" class="btn btn-primary mt-4">Register</button>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            {{ form_start(registrationForm, {'attr': {'class': 'registration-form'}}) }}
+                <h1>Créer un compte</h1>
+            
+                {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'Email'}}) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'placeholder': 'Mot de passe'}}) }}
+                
+                <div class="terms-container">
+                    {{ form_widget(registrationForm.agreeTerms) }}
+                    {{ form_label(registrationForm.agreeTerms, "J'accepte les conditions d'utilisation") }}
+                </div>
+                
+                <button type="submit">S'INSCRIRE</button>
             {{ form_end(registrationForm) }}
+        </div>
+        
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-right">
+                    <h1>Bonjour !</h1>
+                    <p>Entrez vos informations personnelles et commencez votre voyage avec nous</p>
+                    <a href="{{ path('app_login') }}" class="ghost">Connexion</a>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

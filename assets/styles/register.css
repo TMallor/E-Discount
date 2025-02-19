@@ -1,62 +1,282 @@
-/* styles.css */
-.form-container {
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+:root {
+    --primary-color: #6366F1;
+    --primary-hover: #5558D9;
+    --background-color: #FFFFFF;
+    --text-color: #111827;
+    --border-color: #E5E7EB;
+}
+.main-header {
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+.logo {
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.logo-e {
+    color: var(--primary-color);
+}
+
+.logo-discount {
+    color: var(--text-color);
+}
+
+.page-register {
+    min-height: 100vh;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+}
+.main-nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.main-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
+}
+
+.main-nav a:hover {
+    color: var(--primary-color);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.cart-icon{
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem;
+}
+
+.cart-icon:hover {
+    color: var(--primary-color);
+}
+.user-icon {
+    color: var(--primary-color);
+    text-decoration: none;
+    padding: 0.5rem;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+    margin: 50px auto;
+}
+
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+}
+
+.sign-up-container {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+form {
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+    gap: 20px;
+}
+
+h1 {
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.social-container {
+    margin: 20px 0;
+}
+
+.social-container a {
+    border: 1px solid #DDDDDD;
+    border-radius: 50%;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Utilisez 100% de la hauteur de la fenêtre */
+    margin: 0 5px;
+    height: 40px;
+    width: 40px;
+    text-decoration: none;
 }
 
-.form-box {
+span {
+    font-size: 12px;
+    margin: 15px 0;
+}
+
+input {
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 0;
     width: 100%;
-    max-width: 400px; /* Limitez la largeur du formulaire */
-    padding: 2rem;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    border-radius: 5px;
 }
 
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 0.5rem;
+button {
+    border-radius: 20px;
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    font-size: 14px;
     font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    cursor: grab;
+    margin: 0;
+    width: auto;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: normal;
 }
 
-.form-control {
-    display: block;
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
+button:active {
+    transform: scale(0.95);
+}
+
+.overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+}
+
+.overlay {
+    background: var(--primary-color);
+    background: linear-gradient(to right, #5558D9, var(--primary-color));
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    color: #FFFFFF;
+    position: relative;
+    left: -90%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+}
+
+.overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+}
+
+.overlay-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.ghost {
+    background-color: transparent;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.ghost:hover {
     background-color: #FFFFFF;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    color: var(--primary-color);
 }
 
-.form-check-input {
-    margin-top: 0.3rem;
-    margin-left: -1.25rem;
+.terms-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+    width: 100%;
 }
 
-.form-check-label {
-    margin-bottom: 0;
+.terms-container input[type="checkbox"] {
+    width: auto;
+    margin: 0;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+.terms-container label {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+    
+    .overlay-container {
+        display: none;
+    }
+    
+    .sign-up-container {
+        width: 100%;
+    }
 }

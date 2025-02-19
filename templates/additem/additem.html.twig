@@ -1,42 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block body_class %}page-login{% endblock %}
-
-{% block title %}Connexion{% endblock %}
-
-{% block page_stylesheets %}
-    <link rel="stylesheet" href="{{ asset('assets/styles/login.css') }}">
-{% endblock %}
-
 {% block body %}
     {% include 'header.html.twig' %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Téléverser une image</title>
-    <div>
-        <input type="file" name="file" id="file" class="inputfile" />
-        <label for="file">Téléverser une image</label>
+    <div class="upload-container">
+        <h2>Ajouter un produit</h2>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">Ajouter</button>
+        {{ form_end(form) }}
     </div>
-    <body>
-    <input type="file" name="file" id="file" class="inputfile" />
-    <label for="file">Téléverser une image</label>
-
-    <script>
-        // JavaScript pour gérer le changement de fichier
-        const inputFile = document.getElementById('file');
-        const label = inputFile.nextElementSibling;
-
-        inputFile.addEventListener('change', function() {
-            if (inputFile.files.length > 0) {
-                label.textContent = inputFile.files[0].name;
-            } else {
-                label.textContent = 'Téléverser une image';
-            }
-        });
-    </script>
-    </body>
-    </html>
 {% endblock %}
