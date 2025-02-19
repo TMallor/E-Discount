@@ -3,3 +3,18 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+home:
+    path: /
+    controller: App\Controller\HomeController.php
+
+items:
+    path: /items
+    controller: App\Controller\ItemsController.php
+
+additems:
+    path: /additems
+    controller: App\Controller\AdditemsController.php
+
+cart:
+    path: /cart
+    controller: App\Controller\CartController.php
