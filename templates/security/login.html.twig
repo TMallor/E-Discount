@@ -32,47 +32,48 @@
         </div>
     </header>
 
-    <div class="login-container">
+    <div class="login-wrapper">
         <h1>Bienvenue !</h1>
         <p>Connectez-vous pour accéder à votre compte</p>
+        <div class="login-container"></div>
+        <div class="login-container-content">
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
 
-        <form method="post">
-            {% if error %}
-                <div class="alert alert-danger">
-                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                <div class="form-group">
+                    <label for="username">ADRESSE MAIL :</label>
+                    <input 
+                        type="email" 
+                        value="{{ last_username }}" 
+                        name="_username" 
+                        id="username" 
+                        required 
+                        autofocus
+                    >
                 </div>
-            {% endif %}
 
-            <div class="form-group">
-                <label for="username">ADRESSE MAIL :</label>
-                <input 
-                    type="email" 
-                    value="{{ last_username }}" 
-                    name="_username" 
-                    id="username" 
-                    required 
-                    autofocus
-                >
-            </div>
+                <div class="form-group">
+                    <label for="password">MOT DE PASSE :</label>
+                    <input 
+                        type="password" 
+                        name="_password" 
+                        id="password" 
+                        required
+                    >
+                    <a href="/register" class="register-link">REGISTER</a>
 
-            <div class="form-group">
-                <label for="password">MOT DE PASSE :</label>
-                <input 
-                    type="password" 
-                    name="_password" 
-                    id="password" 
-                    required
-                >
-            </div>
+                </div>
 
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            <button type="submit">Login</button>
-        </form>
+                <button type="submit">Login</button>
+            </form>
 
-        <div class="additional-links">
-            <a href="{{ path('app_register') }}">REGISTER</a>
-            <a href="#">MOT DE PASSE OUBLIÉ ?</a>
         </div>
+
     </div>
 {% endblock %}
