@@ -3,7 +3,6 @@ framework:
         # The paths to make available to the asset mapper.
         paths:
             - assets/
-        json_manifest_path: public/assets/manifest.json
         missing_import_mode: strict
 
 when@prod:
