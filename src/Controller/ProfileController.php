@@ -20,9 +20,14 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         if ($request->isMethod('POST')) {
-            $user->setFirstName($request->request->get('firstName'));
-            $user->setLastName($request->request->get('lastName'));
-            $user->setEmail($request->request->get('email'));
+            $user->setFirstName($request->request->get('firstName'))
+                ->setLastName($request->request->get('lastName'))
+                ->setEmail($request->request->get('email'))
+                ->setPhone($request->request->get('phone'))
+                ->setStreet($request->request->get('street'))
+                ->setCity($request->request->get('city'))
+                ->setPostalCode($request->request->get('postalCode'))
+                ->setCountry($request->request->get('country'));
             
             $entityManager->persist($user);
             $entityManager->flush();
