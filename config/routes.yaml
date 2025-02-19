@@ -11,9 +11,9 @@ items:
     path: /items
     controller: App\Controller\ItemsController.php
 
-additems:
-    path: /additems
-    controller: App\Controller\AdditemsController.php
+additem:
+    path: /additem
+    controller: App\Controller\AdditemController.php
 
 cart:
     path: /cart

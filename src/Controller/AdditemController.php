@@ -8,13 +8,13 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 
-final class HomeController extends AbstractController
+final class AdditemController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+    #[Route('/additem', name: 'app_additem')]
     public function index(): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+        return $this->render('additem/additem.html.twig', [
+            'controller_name' => 'AdditemController',
         ]);
     }
 
