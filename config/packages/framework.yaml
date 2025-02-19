@@ -9,6 +9,12 @@ framework:
     #esi: true
     #fragments: true
 
+    error_controller: App\Controller\ErrorController::show
+    exceptions:
+        Symfony\Component\HttpKernel\Exception\NotFoundHttpException: 
+            log_level: notice
+            status_code: 404
+
 when@test:
     framework:
         test: true

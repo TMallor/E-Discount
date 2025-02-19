@@ -5,7 +5,7 @@
                 <span class="logo-e">E-</span><span class="logo-discount">Discount</span>
             </a>
             <nav class="main-nav">
-                <a href="{{ path('home') }}">Accueil</a>
+                <a href="{{ path('home') }}" class="{{ app.request.get('_route') == 'home' ? 'active' : '' }}">Accueil</a>
                 <a href="{{ path('items') }}">Articles</a>
                 <a href="{{ path('additems') }}">Vendres</a>
             </nav>

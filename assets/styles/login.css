@@ -67,6 +67,10 @@
     color: var(--primary-color);
 }
 
+.main-nav a.active {
+    color: var(--primary-color);
+}
+
 .header-right {
     display: flex;
     align-items: center;
