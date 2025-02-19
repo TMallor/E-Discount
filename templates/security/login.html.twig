@@ -6,7 +6,6 @@
 
 {% block page_stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/styles/login.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -16,7 +15,7 @@
         <div class="form-container sign-in-container">
             <form method="post">
                 <h1>Connexion</h1>
-                
+                <p>Connectez-vous pour accéder à votre compte</p>
                 {% if error %}
                     <div class="alert alert-danger">
                         {{ error.messageKey|trans(error.messageData, 'security') }}
