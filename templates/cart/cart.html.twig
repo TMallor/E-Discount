@@ -1,11 +1,16 @@
-<header class="main-header">
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier - E-Discount{% endblock %}
+
+{% block body %}
+    <header class="main-header">
     <div class="header-content">
         <div class="header-left">
             <a href="#" class="logo">
                 <span class="logo-e">E-</span><span class="logo-discount">Discount</span>
             </a>
             <nav class="main-nav">
-                <a href="{{ path('home') }}" class="{{ app.request.get('_route') == 'home' ? 'active' : '' }}">Accueil</a>
+                <a href="{{ path('home') }}">Accueil</a>
                 <a href="{{ path('items') }}">Articles</a>
                 <a href="{{ path('additems') }}">Vendres</a>
             </nav>
@@ -26,3 +31,8 @@
         </div>
     </div>
 </header>
+    <div class="main-content">
+        <h1>Mon panier</h1>
+        <!-- Contenu à venir -->
+    </div>
+{% endblock %} 
