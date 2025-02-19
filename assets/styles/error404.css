@@ -79,7 +79,7 @@
 }
 
 .error-number {
-    font-size: 10rem;
+    font-size: 20rem;
     font-weight: 700;
     color: var(--text-color);
     margin-bottom: 2rem;
@@ -98,5 +98,9 @@
 
     .error-text h2 {
         font-size: 1.5rem;
+    }
+
+    .error-number {
+        font-size: 10rem;
     }
 } 
