@@ -40,97 +40,172 @@
                     <span class="header-total">PRIX TOTAL</span>
                 </div>
 
-                <div class="cart-item">
-                    <div class="item-info">
-                        <img src="{{ asset('images/placeholder.jpg') }}" alt="Maillot de sport">
-                        <div class="item-details">
-                            <h3>NIKE</h3>
-                            <p>Maillot de sport Dri-FIT - Performance respirante</p>
-                            <p>Couleur : Noir</p>
-                            <p>Taille : M</p>
-                            <div class="item-actions">
-                                <button class="modify-btn">
-                                    <i class="fas fa-edit"></i> Modifier
-                                </button>
-                                <button class="save-btn">
-                                    <i class="fas fa-heart"></i> Acheter plus tard
-                                </button>
+                {% if cart_items is empty %}
+                    <p>Votre panier est vide</p>
+                {% else %}
+                    {% for item in cart_items %}
+                        <div class="cart-item">
+                            <div class="item-info">
+                                <img src="{{ asset(item.article.imageUrl) }}" alt="{{ item.article.name }}">
+                                <div class="item-details">
+                                    <h3>{{ item.article.name }}</h3>
+                                    <p>{{ item.article.description }}</p>
+                                    <div class="item-actions">
+                                        <button class="modify-btn">
+                                            <i class="fas fa-edit"></i> Modifier
+                                        </button>
+                                        <button class="save-btn">
+                                            <i class="fas fa-heart"></i> Acheter plus tard
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="item-quantity">
-                        <input type="number" value="1" min="1">
-                    </div>
-                    <div class="item-total">39,99€</div>
-                    <button class="remove-item">×</button>
-                </div>
-
-                <div class="cart-item">
-                    <div class="item-info">
-                        <img src="{{ asset('images/placeholder.jpg') }}" alt="Short de sport">
-                        <div class="item-details">
-                            <h3>ADIDAS</h3>
-                            <p>Short de sport Climalite - Confort optimal</p>
-                            <p>Couleur : Gris</p>
-                            <p>Taille : L</p>
-                            <div class="item-actions">
-                                <button class="modify-btn">
-                                    <i class="fas fa-edit"></i> Modifier
-                                </button>
-                                <button class="save-btn">
-                                    <i class="fas fa-heart"></i> Acheter plus tard
-                                </button>
+                            <div class="item-quantity">
+                                <input type="number" value="1" min="1">
                             </div>
+                            <div class="item-total">{{ item.article.price }}€</div>
+                            <a href="{{ path('cart_remove', {'id': item.article.id}) }}" class="remove-item">×</a>
                         </div>
-                    </div>
-                    <div class="item-quantity">
-                        <input type="number" value="1" min="1">
-                    </div>
-                    <div class="item-total">34,99€</div>
-                    <button class="remove-item">×</button>
-                </div>
+                    {% endfor %}
+                {% endif %}
             </div>
 
-            <div class="cart-summary">
-                <h2>Récapitulatif</h2>
-                <div class="summary-line">
-                    <span>Sous-total (2 articles)</span>
-                    <span>74,98€</span>
-                </div>
-                <div class="summary-line">
-                    <span>Livraison</span>
-                    <span>voir à l'étape suivante</span>
-                </div>
-                <div class="summary-total">
-                    <span>Total</span>
-                    <span class="total-price">74,98€</span>
-                    <span class="tax-included">TVA incluse</span>
-                </div>
-
-                <button class="checkout-btn">Poursuivre la commande</button>
-
-                <div class="promo-code">
-                    <button class="promo-toggle">
-                        Ajouter un code promo
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                </div>
-
-                <div class="cart-benefits">
-                    <div class="benefit-item">
-                        <i class="fas fa-truck"></i>
-                        <p>Livraison GRATUITE en magasin et en point relais</p>
+            {% if cart_items is not empty %}
+                <div class="cart-summary">
+                    <h2>Récapitulatif</h2>
+                    <div class="summary-line">
+                        <span>Sous-total ({{ cart_items|length }} article{% if cart_items|length > 1 %}s{% endif %})</span>
+                        <span>{{ total }}€</span>
                     </div>
-                    <div class="benefit-item">
-                        <i class="fas fa-undo"></i>
-                        <p>Retours GRATUITS pendant 365 jours</p>
+                    <div class="summary-line">
+                        <span>Livraison</span>
+                        <span>voir à l'étape suivante</span>
                     </div>
-                    <div class="benefit-item">
-                        <i class="fas fa-recycle"></i>
-                        <p>Reprise de vos produits usagés conformément à l'article 7.7 des Conditions Générales de Vente</p>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span class="total-price">{{ total }}€</span>
+                        <span class="tax-included">TVA incluse</span>
+                    </div>
+
+                    <button class="checkout-btn">Poursuivre la commande</button>
+
+                    <div class="promo-code">
+                        <button class="promo-toggle">
+                            Ajouter un code promo
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <div class="cart-benefits">
+                        <div class="benefit-item">
+                            <i class="fas fa-truck"></i>
+                            <p>Livraison GRATUITE en magasin et en point relais</p>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-undo"></i>
+                            <p>Retours GRATUITS pendant 365 jours</p>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-recycle"></i>
+                            <p>Reprise de vos produits usagés conformément à l'article 7.7 des Conditions Générales de Vente</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </main>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .cart-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .cart-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 1fr auto auto;
+            gap: 2rem;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .item-image img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .item-details h3 {
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .remove-item {
+            color: #EF4444;
+            padding: 0.5rem;
+        }
+
+        .cart-summary {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            text-align: right;
+        }
+
+        .total {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .checkout-button:hover {
+            background: var(--primary-hover);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .continue-shopping {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .continue-shopping:hover {
+            background: var(--primary-hover);
+        }
+    </style>
 {% endblock %}

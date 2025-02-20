@@ -12,10 +12,6 @@ items:
     path: /items
     controller: App\Controller\ItemsController::index
 
-additems:
-    path: /additems
-    controller: App\Controller\AddItemsController::index
-
 cart:
     path: /cart
     controller: App\Controller\CartController::index
