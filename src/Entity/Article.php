@@ -17,12 +17,6 @@ class Article
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?int $class = null;
-
-    #[ORM\Column(length: 255)]
-    private ?int $mainfeatures = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -35,7 +29,7 @@ class Article
     private ?int $author_id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    private ?string $image_url = null;
 
     public function getId(): ?int
     {
@@ -102,37 +96,15 @@ class Article
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImageUrl(): ?string
     {
-        return $this->image;
+        return $this->image_url;
     }
 
-    public function setImage(string $image): static
+    public function setImageUrl(string $image_url): static
     {
-        $this->image = $image;
+        $this->image_url = $image_url;
 
-        return $this;
-    }
-
-    public function getClass(): ?string
-    {
-        return $this->class;
-    }
-
-    public function setClass(string $class): static
-    {
-        $this->class = $class;
-        return $this;
-    }
-
-    public function getMainfeatures(): ?string
-    {
-        return $this->mainfeatures;
-    }
-
-    public function setMainfeatures(string $mainfeatures): static
-    {
-        $this->mainfeatures = $mainfeatures;
         return $this;
     }
 }

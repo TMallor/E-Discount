@@ -10,7 +10,7 @@ import './styles/login.css';
 import './styles/register.css';
 import './styles/home.css';
 import './styles/error404.css';
-import './styles/profile.css';
-import './styles/additem.css'
+import './styles/cart.css';
+import './styles/profile.css'
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
