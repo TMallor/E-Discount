@@ -11,6 +11,21 @@ h1 {
     color: #333;
 }
 
+.dotted-box {
+    border: 2px dotted #000;
+    padding: 10px;
+    display: inline-block;
+    text-align: center;
+}
+
+.dotted-box img {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+
 .imagedropcontainer {
     border: 2px dashed #ccc;
     border-radius: 8px;

@@ -29,7 +29,7 @@ class AdditemType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Titre de l\'annonce',
                 'attr' => [
-                    'placeholder' => 'Ex: Smart Watch Pro'
+                    'placeholder' => 'Ex: Maillot exterieur PSG'
                 ]
             ])
             ->add('class', ChoiceType::class, [

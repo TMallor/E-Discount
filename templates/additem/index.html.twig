@@ -25,31 +25,37 @@
                     </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                {{ form_label(form.name) }}
-                {{ form_widget(form.name) }}
+            <div class="dotted-box">
+                <a href="{{  form_widget(form.image)  }}">
+                    <img src="{{ asset('assets/uploadimage.png') }}" alt="Image description">
+                </a>
             </div>
 
-            <div class="form-group">
-                {{ form_label(form.class) }}
-                {{ form_widget(form.class) }}
-            </div>
 
-            <div class="form-group">
-                {{ form_label(form.price) }}
-                {{ form_widget(form.price) }}
-            </div>
+        {#            <div class="form-group">#}
+{#                {{ form_label(form.name) }}#}
+{#                {{ form_widget(form.name) }}#}
+{#            </div>#}
 
-            <div class="form-group">
-                {{ form_label(form.description) }}
-                {{ form_widget(form.description) }}
-            </div>
+{#            <div class="form-group">#}
+{#                {{ form_label(form.class) }}#}
+{#                {{ form_widget(form.class) }}#}
+{#            </div>#}
 
-            <div class="form-group">
-                {{ form_label(form.mainfeatures) }}
-                {{ form_widget(form.mainfeatures) }}
-            </div>
+{#            <div class="form-group">#}
+{#                {{ form_label(form.price) }}#}
+{#                {{ form_widget(form.price) }}#}
+{#            </div>#}
+
+{#            <div class="form-group">#}
+{#                {{ form_label(form.description) }}#}
+{#                {{ form_widget(form.description) }}#}
+{#            </div>#}
+
+{#            <div class="form-group">#}
+{#                {{ form_label(form.mainfeatures) }}#}
+{#                {{ form_widget(form.mainfeatures) }}#}
+{#            </div>#}
 
             <button type="submit" class="btn">Publier l'annonce</button>
         {{ form_end(form) }}

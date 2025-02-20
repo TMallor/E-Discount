@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-
 /* Variables CSS */
 :root {
     --primary-color: #6366F1;
@@ -9,83 +7,7 @@
     --border-color: #E5E7EB;
 }
 
-.main-header {
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
 
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-}
-
-.logo {
-    text-decoration: none;
-    font-size: 1.25rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-}
-
-.logo-e {
-    color: var(--primary-color);
-}
-
-.logo-discount {
-    color: var(--text-color);
-}
-
-.main-nav {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-}
-
-.main-nav a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-    padding: 0.5rem 0;
-}
-
-.main-nav a:hover {
-    color: var(--primary-color);
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-.cart-icon{
-    color: var(--text-color);
-    text-decoration: none;
-    padding: 0.5rem;
-}
-
-.cart-icon:hover {
-    color: var(--primary-color);
-}
-.user-icon {
-    color: var(--primary-color);
-    text-decoration: none;
-    padding: 0.5rem;
-}
 
 .page-login {
     background: #f6f5f7;
@@ -152,11 +74,6 @@ h1 {
     width: 40px;
     text-decoration: none;
     color: #333;
-}
-
-span {
-    font-size: 12px;
-    margin: 15px 0;
 }
 
 input {
@@ -301,3 +218,9 @@ button:active {
     z-index: 3;
     position: relative;
 } 
+.overlay-panel h1 {
+    color: white;   
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
