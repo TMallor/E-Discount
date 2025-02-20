@@ -3,9 +3,106 @@
 {% block title %}Articles - E-Discount{% endblock %}
 
 {% block body %}
-   {% include 'header.html.twig' %}
-    <div class="main-content">
-        <h1>Articles</h1>
-        <!-- Contenu à venir -->
-    </div>
+    {% include 'header.html.twig' %}
+
+    <main class="container">
+        <h1>Nos Articles</h1>
+        
+        <div class="articles-grid">
+            {% for article in articles %}
+                <div class="article-card">
+                    <img src="{{ asset(article.imageUrl) }}" alt="{{ article.name }}">
+                    <div class="article-info">
+                        <h3>{{ article.name }}</h3>
+                        <p>{{ article.description }}</p>
+                        <p class="price">{{ article.price }}€</p>
+                        <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart-btn">
+                            Ajouter au panier
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucun produit disponible pour le moment.</p>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .article-info {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .article-info h3 {
+            margin: 0 0 0.5rem;
+            color: #333;
+        }
+
+        .article-info p {
+            margin: 0 0 1rem;
+            color: #666;
+        }
+
+        .price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .add-to-cart-btn {
+            display: block;
+            width: calc(100% - 2rem);
+            padding: 0.75rem;
+            background: #2563eb;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.2s;
+            margin: 1rem auto 0;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #1d4ed8;
+        }
+    </style>
 {% endblock %} 
