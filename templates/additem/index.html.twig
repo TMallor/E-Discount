@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vendre un article - E-Discount{% endblock %}
+
+{% block page_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/styles/additem.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    
+    <div class="main-content">
+        <h1>Vendre un article</h1>
+        
+        {{ form_start(form) }}
+            <div class="titlecard">
+                <h2>Photos du produit</h2>
+            </div>
+            <div class="imagedropcontainer">
+                <div class="imageicon">
+                    <div class="imagets">
+                        {{ form_widget(form.image) }}
+                        <p>Télécharger une image</p>
+                        <small>PNG, JPG jusqu'à 10MB</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.class) }}
+                {{ form_widget(form.class) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.price) }}
+                {{ form_widget(form.price) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.mainfeatures) }}
+                {{ form_widget(form.mainfeatures) }}
+            </div>
+
+            <button type="submit" class="btn">Publier l'annonce</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+

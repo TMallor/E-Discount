@@ -1,42 +1,97 @@
-.upload-container {
-    text-align: center;
-    border: 1px dashed #ccc;
-    padding: 20px;
-    width: 400px;
-    margin: 50px auto;
-    border-radius: 8px;
-    background-color: #fff;
+.main-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
-.inputfile {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-}
-
-.upload-label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
+h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
     color: #333;
 }
 
-.upload-icon {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
+.imagedropcontainer {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    background: #f9f9f9;
 }
 
-.upload-label span {
-    font-size: 14px;
-    color: #007bff;
+.imageicon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
-.file-info {
-    font-size: 12px;
-    color: #888;
+.imagets {
+    cursor: pointer;
+}
+
+.imagets input[type="file"] {
+    display: none;
+}
+
+.imagets::before {
+    content: '↑';
+    font-size: 2rem;
+    color: #666;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.btn {
+    background-color: #6366F1;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.btn:hover {
+    background-color: #5558D9;
+}
+
+.titlecard {
+    margin-bottom: 1rem;
+}
+
+.titlecard h2 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
 }

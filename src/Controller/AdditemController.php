@@ -1,36 +1,58 @@
 <?php
-
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Form\AdditemType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 final class AdditemController extends AbstractController
 {
-    #[Route('/additem', name: 'app_additem')]
-    public function index(): Response
+    #[Route('/additem', name: 'additem')]
+    public function addItem(Request $request): Response
     {
-        return $this->render('additem/additem.html.twig', [
-            'controller_name' => 'AdditemController',
-        ]);
-    }
+        $item = new Article();
+        $form = $this->createForm(AdditemType::class, $item);
+        $form->handleRequest($request);
 
-    #[Route('/button-action', name: 'button_action', methods: ['GET', 'POST'])]
-    public function buttonAction(Request $request): Response
-    {
-        $action = $request->query->get('action') ?? $request->request->get('action');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
 
-        if ($action === 'action1') {
-            // Gérer l'action 1
-            return new Response('Action 1 exécutée !');
-        } elseif ($action === 'action2') {
-            // Gérer l'action 2
-            return new Response('Action 2 exécutée !');
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $slugger = new AsciiSlugger();
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Gérer l'exception si quelque chose se passe mal pendant le téléchargement du fichier
+                }
+
+                $item->setImage($newFilename);
+            }
+
+            $item->setPublicationDate((new \DateTime())->format('Y-m-d H:i:s'));
+            $item->setAuthorId($this->getUser()->getId());
+            
+            $entityManager = $this->container->get('doctrine')->getManager();
+            $entityManager->persist($item);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre article a été publié avec succès!');
+            return $this->redirectToRoute('items');
         }
 
-        return new Response('Aucune action spécifiée.');
+        return $this->render('additem/index.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
