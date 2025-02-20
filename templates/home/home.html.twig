@@ -14,60 +14,30 @@
             <div class="hero-content">
                 <h1>Découvrez nos produits</h1>
                 <p>Les meilleures offres au meilleur prix</p>
-                <a href="#" class="cta-button">Voir tous les articles</a>
+                <a href="{{ path('items') }}" class="cta-button">Voir tous les articles</a>
             </div>
         </section>
 
         <section class="featured-products">
             <h2>Nos produits vedettes</h2>
             <div class="product-grid">
-                <!-- Premier produit -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="{{ asset('images/placeholder.jpg') }}" alt="Maillot">
+                {% for article in articles %}
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="{{ asset(article.imageUrl) }}" alt="{{ article.name }}">
+                        </div>
+                        <div class="product-info">
+                            <h3>{{ article.name }}</h3>
+                            <p class="description">{{ article.description }}</p>
+                            <p class="price">{{ article.price }} €</p>
+                            <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart">
+                                Ajouter au panier
+                            </a>
+                        </div>
                     </div>
-                    <div class="product-info">
-                        <h3>Maillot de Sport</h3>
-                        <p class="price">29.99 €</p>
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
-
-                <!-- Deuxième produit -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="{{ asset('images/placeholder.jpg') }}" alt="Short">
-                    </div>
-                    <div class="product-info">
-                        <h3>Short de Sport</h3>
-                        <p class="price">19.99 €</p>
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
-
-                <!-- Troisième produit -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="{{ asset('images/placeholder.jpg') }}" alt="Chaussures">
-                    </div>
-                    <div class="product-info">
-                        <h3>Chaussures de Sport</h3>
-                        <p class="price">49.99 €</p>
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
-
-                <!-- Quatrième produit -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="{{ asset('images/placeholder.jpg') }}" alt="Ballon">
-                    </div>
-                    <div class="product-info">
-                        <h3>Ballon de Football</h3>
-                        <p class="price">15.99 €</p>
-                        <button class="add-to-cart">Ajouter au panier</button>
-                    </div>
-                </div>
+                {% else %}
+                    <p>Aucun produit disponible pour le moment.</p>
+                {% endfor %}
             </div>
         </section>
     </main>

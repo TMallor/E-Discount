@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -11,9 +13,15 @@ use Symfony\Component\HttpFoundation\Request;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('home/home.html.twig');
+        // Récupérer seulement les 4 premiers articles
+        $articles = $entityManager->getRepository(Article::class)
+            ->findBy([], ['id' => 'ASC'], 4);
+
+        return $this->render('home/home.html.twig', [
+            'articles' => $articles
+        ]);
     }
 
     #[Route('/button-action', name: 'button_action', methods: ['GET', 'POST'])]

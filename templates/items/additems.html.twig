@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vendre - E-Discount{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    
+    <main class="container">
+        <h1>Page en construction</h1>
+    </main>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--text-color);
+            font-size: 2rem;
+            margin-top: 2rem;
+        }
+    </style>
+{% endblock %} 

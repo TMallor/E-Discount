@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur - E-Discount{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    
+    <main class="error-content">
+        <div class="error-container">
+            <div class="error-code">
+                <span class="first-digit">{{ status_code }}</span>
+            </div>
+            <div class="error-text">
+                <h2>Une erreur est survenue</h2>
+                <p>Désolé, quelque chose s'est mal passé</p>
+                <a href="{{ path('home') }}" class="back-home">Retour à l'accueil</a>
+            </div>
+        </div>
+    </main>
+{% endblock %} 
