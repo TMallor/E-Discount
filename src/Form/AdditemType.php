@@ -35,10 +35,11 @@ class AdditemType extends AbstractType
             ->add('class', ChoiceType::class, [
                 'label' => 'Catégorie',
                 'choices' => [
-                    'Électronique' => 'electronique',
-                    'Vêtements' => 'vetements',
-                    'Sports' => 'sports',
-                    'Maison' => 'maison'
+                    'Chaussurres' => 'chaussurres',
+                    'Maillots' => 'maillots',
+                    'Shorts' => 'shorts',
+                    'Joggins' => 'joggins',
+                    'Chaussettes' => 'chaussettes'
                 ]
             ])
             ->add('price', NumberType::class, [

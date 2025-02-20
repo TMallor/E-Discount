@@ -2,6 +2,7 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
+    align-items: center;
 }
 
 h1 {
@@ -12,55 +13,25 @@ h1 {
 }
 
 .dotted-box {
-    border: 2px dotted red;
-    padding: 10px;
-    display: inline-block;
-    text-align: center;
-    background-color: yellow;
+    border: 2px dashed #D1D5DB;
+    padding: 5px;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 5px;
 }
 
 .dotted-box img {
-    width: 20%;
+    width: auto;
     height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-
-.imagedropcontainer {
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    background: #f9f9f9;
-}
-
-.imageicon {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.imagets {
-    cursor: pointer;
-}
-
-.imagets input[type="file"] {
-    display: none;
-}
-
-.imagets::before {
-    content: '↑';
-    font-size: 2rem;
-    color: #666;
-    display: block;
-    margin-bottom: 0.5rem;
+    margin: auto;
 }
 
 .form-group {
+    margin-top: 2%;
     margin-bottom: 1.5rem;
+    color: #E5E7EB;
 }
 
 label {
@@ -76,14 +47,16 @@ textarea,
 select {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ddd;
+    border: 1px solid #E5E7EB;
     border-radius: 4px;
     font-size: 1rem;
+
 }
 
 textarea {
     min-height: 100px;
-    resize: vertical;
+    resize: none;
+    color: black;
 }
 
 .btn {
@@ -102,6 +75,56 @@ textarea {
     background-color: #5558D9;
 }
 
+.form-group {
+    margin-bottom: 20px;
+}
+
+.inputLabel {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: #CCCCCC;
+    margin-bottom: 5px;
+}
+
+.inputContainer {
+    position: relative;
+}
+
+.customInput {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #CCCCCC;
+    outline: none;
+    transition: border-color 0.3s ease;
+    color: black;
+}
+
+.customInput:focus {
+    border-color: transparent;
+    background-color: transparent;
+
+}
+
+.inputUnderline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
 .titlecard {
     margin-bottom: 1rem;
 }
@@ -111,3 +134,4 @@ textarea {
     color: #333;
     margin-bottom: 0.5rem;
 }
+
