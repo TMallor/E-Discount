@@ -12,14 +12,15 @@ h1 {
 }
 
 .dotted-box {
-    border: 2px dotted #000;
+    border: 2px dotted red;
     padding: 10px;
     display: inline-block;
     text-align: center;
+    background-color: yellow;
 }
 
 .dotted-box img {
-    width: 100px;
+    width: 20%;
     height: auto;
     display: block;
     margin: 0 auto;

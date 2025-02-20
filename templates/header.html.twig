@@ -1,25 +1,133 @@
+<style>
+    :root {
+        --primary-color: #6366F1;
+        --primary-hover: #5558D9;
+        --background-color: #FFFFFF;
+        --text-color: #111827;
+        --border-color: #E5E7EB;
+    }
+    .main-header {
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
+    }
+
+    .logo {
+        text-decoration: none;
+        font-size: 2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-e {
+        color: var(--primary-color);
+    }
+
+    .logo-discount {
+        color: var(--text-color);
+    }
+
+    .main-nav {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .main-nav a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        padding: 0.5rem 0;
+    }
+
+    .main-nav a:hover {
+        color: var(--primary-color);
+    }
+
+    .main-nav a.active {
+        color: var(--primary-color);
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .cart-icon{
+        color: var(--text-color);
+        text-decoration: none;
+        padding: 0.5rem;
+    }
+
+    .cart-icon:hover {
+        color: var(--primary-color);
+    }
+
+    .user-icon {
+        color: var(--text-color);
+        text-decoration: none;
+        padding: 0.5rem;
+    }
+    .user-icon:hover {
+        color: var(--primary-color);
+    }
+
+    .cart-icon.active {
+        color: var(--primary-color);
+    }
+
+    .user-icon.active {
+        color: var(--primary-color);
+    }
+
+    span {
+        font-size: 20px;
+        margin: 15px 0;
+    }
+</style>
 <header class="main-header">
+    <link rel="icon" href="{{ asset('assets/image/E.png') }}" type="image/png">
     <div class="header-content">
         <div class="header-left">
             <a href="#" class="logo">
                 <span class="logo-e">E-</span><span class="logo-discount">Discount</span>
             </a>
             <nav class="main-nav">
-                <a href="{{ path('home') }}">Accueil</a>
-                <a href="{{ path('items') }}">Articles</a>
-                <a href="{{ path('additems') }}">Vendres</a>
+                <a href="{{ path('home') }}" class="{{ app.request.get('_route') == 'home' ? 'active' : '' }}">Accueil</a>
+                <a href="{{ path('items') }}" class="{{ app.request.get('_route') == 'items' ? 'active' : '' }}">Articles</a>
+                <a href="{{ path('additems') }}" class="{{ app.request.get('_route') == 'additems' ? 'active' : '' }}">Vendre</a>
             </nav>
         </div>
         <div class="header-right">
-            <a href="{{ path('cart') }}" class="cart-icon">
+            <a href="{{ path('cart') }}" class="cart-icon {{ app.request.get('_route') == 'cart' ? 'active' : '' }}">
                 <i class="fas fa-shopping-cart"></i>
             </a>
             {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('app_profile') }}" class="user-icon">
+                <a href="{{ path('app_profile') }}" class="user-icon {{ app.request.get('_route') == 'app_profile' ? 'active' : '' }}">
                     <i class="fas fa-user"></i>
                 </a>
             {% else %}
-                <a href="{{ path('app_login') }}" class="user-icon">
+                <a href="{{ path('app_login') }}" class="user-icon {{ app.request.get('_route') in ['app_login', 'app_register'] ? 'active' : '' }}">
                     <i class="fas fa-user"></i>
                 </a>
             {% endif %}

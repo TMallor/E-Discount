@@ -8,23 +8,17 @@
 
 {% block body %}
     {% include 'header.html.twig' %}
-    
-    <div class="main-content">
-        <h1>Vendre un article</h1>
         
         {{ form_start(form) }}
-            <div class="titlecard">
-                <h2>Photos du produit</h2>
-            </div>
-            <div class="imagedropcontainer">
-                <div class="imageicon">
-                    <div class="imagets">
-                        {{ form_widget(form.image) }}
-                        <p>Télécharger une image</p>
-                        <small>PNG, JPG jusqu'à 10MB</small>
-                    </div>
-                </div>
-            </div>
+{#            <div class="imagedropcontainer">#}
+{#                <div class="imageicon">#}
+{#                    <div class="imagets">#}
+{#                        {{ form_widget(form.image) }}#}
+{#                        <p>Télécharger une image</p>#}
+{#                        <small>PNG, JPG jusqu'à 10MB</small>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
             <div class="dotted-box">
                 <a href="{{  form_widget(form.image)  }}">
                     <img src="{{ asset('assets/uploadimage.png') }}" alt="Image description">
@@ -59,6 +53,6 @@
 
             <button type="submit" class="btn">Publier l'annonce</button>
         {{ form_end(form) }}
-    </div>
+
 {% endblock %}
 
