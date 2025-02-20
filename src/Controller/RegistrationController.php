@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
             
             // Si profile_picture n'est pas fourni, mettre une valeur par défaut
             if (!$user->getProfilePicture()) {
-                $user->setProfilePicture('default.jpg');
+                $user->setProfilePicture('ethan.jpeg');
             }
 
             $entityManager->persist($user);

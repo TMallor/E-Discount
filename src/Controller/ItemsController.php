@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -9,8 +11,12 @@ use Symfony\Component\Routing\Attribute\Route;
 class ItemsController extends AbstractController
 {
     #[Route('/items', name: 'items')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('items/items.html.twig');
+        $articles = [];
+
+        return $this->render('items/items.html.twig', [
+            'articles' => $articles
+        ]);
     }
 } 
