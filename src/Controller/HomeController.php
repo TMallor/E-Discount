@@ -15,7 +15,17 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        // Récupérer seulement les 4 premiers articles
+        // Récupérer l'article Nike et mettre à jour son image
+        $article = $entityManager->getRepository(Article::class)
+            ->findOneBy(['name' => 'Nike']);
+
+        if ($article) {
+            // Mettre à jour l'image de l'article Nike
+            $article->setImageUrl('assets/image/tshirt_sport.png');
+            $entityManager->flush();
+        }
+
+        // Récupérer les 4 premiers articles
         $articles = $entityManager->getRepository(Article::class)
             ->findBy([], ['id' => 'ASC'], 4);
 
