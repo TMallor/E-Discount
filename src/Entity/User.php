@@ -37,7 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?float $balance = 0.0;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $profile_picture = 'default.jpg';
+    private ?string $profile_picture = 'ethan.jpeg';
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
@@ -59,9 +59,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $phone = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $address = null;
 
     public function getId(): ?int
     {
@@ -236,17 +233,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhone(?string $phone): static
     {
         $this->phone = $phone;
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?string $address): static
-    {
-        $this->address = $address;
         return $this;
     }
 }
