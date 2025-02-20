@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 final class AdditemController extends AbstractController
 {
     #[Route('/additem', name: 'additem')]
-    public function addItem(Request $request): Response
+    public function addItem(Request $request ,LoggerInterface $logger): Response
     {
         $item = new Article();
         $form = $this->createForm(AdditemType::class, $item);
@@ -34,7 +34,11 @@ final class AdditemController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // Gérer l'exception si quelque chose se passe mal pendant le téléchargement du fichier
+                    $logger->error('Erreur lors du téléchargement de l\'image : ' . $e->getMessage());
+                    $this->addFlash('error', 'Une erreur est survenue lors du téléchargement de l\'image.');
+                    return $this->render('article/add.html.twig', [
+                        'form' => $form->createView(),
+                    ]);
                 }
 
                 $item->setImage($newFilename);
@@ -42,7 +46,7 @@ final class AdditemController extends AbstractController
 
             $item->setPublicationDate((new \DateTime())->format('Y-m-d H:i:s'));
             $item->setAuthorId($this->getUser()->getId());
-            
+
             $entityManager = $this->container->get('doctrine')->getManager();
             $entityManager->persist($item);
             $entityManager->flush();
@@ -51,7 +55,7 @@ final class AdditemController extends AbstractController
             return $this->redirectToRoute('items');
         }
 
-        return $this->render('additem/index.html.twig', [
+        return $this->render('additem/additem.html.twig', [
             'form' => $form->createView(),
         ]);
     }
