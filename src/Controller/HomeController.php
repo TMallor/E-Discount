@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,25 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(): Response
     {
-        // Récupérer l'article Nike et mettre à jour son image
-        $article = $entityManager->getRepository(Article::class)
-            ->findOneBy(['name' => 'Nike']);
-
-        if ($article) {
-            // Mettre à jour l'image de l'article Nike
-            $article->setImageUrl('assets/image/tshirt_sport.png');
-            $entityManager->flush();
-        }
-
-        // Récupérer les 4 premiers articles
-        $articles = $entityManager->getRepository(Article::class)
-            ->findBy([], ['id' => 'ASC'], 4);
-
-        return $this->render('home/home.html.twig', [
-            'articles' => $articles
-        ]);
+        return $this->render('home/home.html.twig');
     }
 
     #[Route('/button-action', name: 'button_action', methods: ['GET', 'POST'])]

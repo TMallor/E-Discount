@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vendre un article - E-Discount{% endblock %}
+
+{% block page_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/additem.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+
+    <div class="main-content">
+        <h1>Vendre un article</h1>
+
+        {{ form_start(form) }}
+            <div class="titlecard">
+                <h2>Photos du produit</h2>
+            </div>
+            <div class="dotted-box">
+                <a href="{{ form_widget(form.image) }}">
+                    <img src="{{ asset('image/uploadimage.svg') }}" alt="Télécharger une image">
+                </a>
+            </div>
+            <div class="form-group">
+                <label class="inputLabel">{{ form_label(form.name) }}</label>
+                <div class="inputContainer">
+                    {{ form_widget(form.name, {'attr': {'class': 'customInput', 'placeholder': ''}}) }}
+                    <div class="inputUnderline"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="inputLabel">{{ form_label(form.class) }}</label>
+                <div class="inputContainer">
+                    {{ form_widget(form.class, {'attr': {'class': 'customInput', 'placeholder': ''}}) }}
+                    <div class="inputUnderline"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="inputLabel">{{ form_label(form.price) }}</label>
+                <div class="inputContainer">
+                    {{ form_widget(form.price, {'attr': {'class': 'customInput', 'placeholder': ''}}) }}
+                    <div class="inputUnderline"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="inputLabel">{{ form_label(form.description) }}</label>
+                <div class="inputContainer">
+                    {{ form_widget(form.description, {'attr': {'class': 'customInput', 'placeholder': ''}}) }}
+                    <div class="inputUnderline"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="inputLabel">{{ form_label(form.mainfeatures) }}</label>
+                <div class="inputContainer">
+                    {{ form_widget(form.mainfeatures, {'attr': {'class': 'customInput', 'placeholder': ''}}) }}
+                    <div class="inputUnderline"></div>
+                </div>
+            </div>
+
+
+        <button type="submit" class="btn">Publier l'annonce</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
