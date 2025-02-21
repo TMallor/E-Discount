@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Uid\Ulid;
 
 class CartController extends AbstractController
 {
@@ -22,8 +23,9 @@ class CartController extends AbstractController
         // Convertir l'ID en chaîne
         $userId = (string) $user->getId();
         
-        // Récupérer les articles du panier de l'utilisateur
-        $cartItems = $entityManager->getRepository(Cart::class)->findBy(['user_id' => $userId]);
+        // Récupérer les articles du panier de l'utilisateur en utilisant la bonne méthode
+        $cartItems = $entityManager->getRepository(Cart::class)
+            ->findBy(['user_id' => Ulid::fromBase32($userId)]);
         
         // Récupérer les détails des articles
         $articles = [];

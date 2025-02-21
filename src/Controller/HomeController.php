@@ -15,13 +15,13 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        // Récupérer l'article Nike et mettre à jour son image
-        $article = $entityManager->getRepository(Article::class)
-            ->findOneBy(['name' => 'Nike']);
+        // Supprimer le doublon Nike
+        $articles = $entityManager->getRepository(Article::class)
+            ->findBy(['name' => 'Nike Air Max 90'], ['id' => 'ASC']);
 
-        if ($article) {
-            // Mettre à jour l'image de l'article Nike
-            $article->setImageUrl('assets/image/tshirt_sport.png');
+        if (count($articles) > 1) {
+            // Garder le premier, supprimer le deuxième
+            $entityManager->remove($articles[1]);
             $entityManager->flush();
         }
 
