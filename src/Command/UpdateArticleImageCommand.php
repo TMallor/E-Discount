@@ -40,7 +40,6 @@ class UpdateArticleImageCommand extends Command
             return Command::SUCCESS;
         }
 
-        // Si l'article n'existe pas, le créer
         $article = new Article();
         $article->setName('Nike Air Max 90');
         $article->setClass('chaussures');

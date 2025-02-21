@@ -37,6 +37,7 @@ final class AdditemController extends AbstractController
                         $this->getParameter('images_directory'),
                         $newFilename
                     );
+                    $this->addFlash('success', 'Image uploadée dans : ' . $this->getParameter('images_directory') . '/' . $newFilename);
                 } catch (FileException $e) {
                     $this->addFlash('error', 'Une erreur est survenue lors du téléchargement de l\'image');
                 }
