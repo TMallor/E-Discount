@@ -16,13 +16,13 @@
         <div class="titlecard">
             <h2>Photos du produit</h2>
         </div>
-        <div class="dotted-box">
-            <a href="{{ form_widget(form.image) }}">
-                <img src="{{ asset('image/upload.png') }}" class="upload-image">
-            </a>
-            <h3>Télécharger une Image</h3>
-            <h4>PNG, JPG jusqu'à 10MB</h4>
-        </div>
+        <label class="dotted-box">
+            {{ form_widget(form.image, {'attr': {'class': 'file-input'}}) }}
+            <img id="preview-image" src="{{ asset('image/upload.png') }}" class="upload-image">
+            <h3 class="upload-text">Télécharger une Image</h3>
+            <h4 class="upload-text">PNG, JPG jusqu'à 10MB</h4>
+        </label>
+
         <div class="form-group">
             <label class="inputLabel">{{ form_label(form.name) }}</label>
             <div class="inputContainer">
@@ -66,4 +66,31 @@
         <button type="submit" class="btn">Publier l'annonce</button>
         {{ form_end(form) }}
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.querySelector('.file-input');
+            const previewImage = document.getElementById('preview-image');
+            const uploadTexts = document.querySelectorAll('.upload-text');
+
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewImage.classList.add('preview-active');
+                        uploadTexts.forEach(text => text.style.display = 'none');
+                    }
+                    
+                    reader.readAsDataURL(file);
+                } else {
+                    previewImage.src = "{{ asset('image/upload.png') }}";
+                    previewImage.classList.remove('preview-active');
+                    uploadTexts.forEach(text => text.style.display = 'block');
+                }
+            });
+        });
+    </script>
 {% endblock %}

@@ -130,7 +130,7 @@
 }
 
 .item-details p {
-    color: #666;
+    color: #667;
     font-size: 0.9rem;
     margin: 0;
     white-space: nowrap;
@@ -157,7 +157,7 @@
     gap: 0.3rem;
     padding: 0.3rem 0.5rem;
     font-size: 0.8rem;
-    color: #666;
+    color: #667;
     background: none;
     border: 1px solid var(--border-color);
     border-radius: 0.375rem;
@@ -266,7 +266,7 @@
 
 .tax-included {
     font-size: 0.75rem;
-    color: #666;
+    color: #667;
 }
 
 .checkout-button {

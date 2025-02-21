@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Form\AdditemType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,10 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 final class AdditemController extends AbstractController
 {
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    ) {}
+
     #[Route('/additem', name: 'additem')]
     public function addItem(Request $request): Response
     {
@@ -40,13 +45,11 @@ final class AdditemController extends AbstractController
             }
 
             $item->setPublicationDate((new \DateTime())->format('Y-m-d H:i:s'));
-            $item->setAuthorId($this->getUser()->getId());
+            $item->setAuthorId((int) $this->getUser()->getId());
 
-            $entityManager = $this->container->get('doctrine')->getManager();
-            $entityManager->persist($item);
-            $entityManager->flush();
+            $this->entityManager->persist($item);
+            $this->entityManager->flush();
 
-            $this->addFlash('success', 'Votre article a été publié avec succès!');
             return $this->redirectToRoute('items');
         }
 
