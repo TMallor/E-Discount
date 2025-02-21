@@ -26,9 +26,9 @@ class Cart
         return $this->id;
     }
 
-    public function getUserId(): ?string
+    public function getUserId(): ?Ulid
     {
-        return $this->user_id ? $this->user_id->toBase32() : null;
+        return $this->user_id;
     }
 
     public function setUserId(string $user_id): static

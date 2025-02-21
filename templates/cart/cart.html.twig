@@ -42,7 +42,7 @@
                     {% for item in cart_items %}
                         <div class="cart-item">
                             <div class="item-info">
-                                <img src="{{ asset(item.article.imageUrl) }}" alt="{{ item.article.name }}">
+                                <img src="{{ asset('image/' ~ item.article.image) }}" alt="{{ item.article.name }}">
                                 <div class="item-details">
                                     <h3>{{ item.article.name }}</h3>
                                     <p>{{ item.article.description }}</p>
