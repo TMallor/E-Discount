@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Erreur - E-Discount{% endblock %}
-
+{% block page_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/error404.css') }}">
+{% endblock %}
 {% block body %}
     {% include 'header.html.twig' %}
     
