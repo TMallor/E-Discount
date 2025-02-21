@@ -17,14 +17,10 @@
             </div>
             <div class="progress-step">
                 <span class="step-number">2</span>
-                <span class="step-label">Authentification</span>
-            </div>
-            <div class="progress-step">
-                <span class="step-number">3</span>
                 <span class="step-label">Livraison</span>
             </div>
             <div class="progress-step">
-                <span class="step-number">4</span>
+                <span class="step-number">3</span>
                 <span class="step-label">Paiement</span>
             </div>
         </div>
@@ -79,21 +75,18 @@
                     </div>
                     <div class="summary-line">
                         <span>Livraison</span>
-                        <span>voir à l'étape suivante</span>
+                        <span>5.99€</span>
                     </div>
                     <div class="summary-total">
                         <span>Total</span>
-                        <span class="total-price">{{ total }}€</span>
+                        <span class="total-price">{{ total + 5.99 }}€</span>
                         <span class="tax-included">TVA incluse</span>
                     </div>
 
-                    <button class="checkout-btn">Poursuivre la commande</button>
-
-                    <div class="promo-code">
-                        <button class="promo-toggle">
-                            Ajouter un code promo
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
+                    <div class="cart-actions">
+                        <a href="{{ path('checkout') }}" class="checkout-button">
+                            Poursuivre la commande
+                        </a>
                     </div>
 
                     <div class="cart-benefits">

@@ -57,6 +57,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 2rem;
+    margin-bottom: 2rem;
 }
 
 .cart-items {
@@ -231,14 +232,13 @@
 
 .cart-summary {
     background: white;
-    padding: 1.5rem;
+    padding: 2rem;
     border-radius: 0.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     height: fit-content;
-    min-width: 280px;
-    max-width: 350px;
-    justify-self: end;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .summary-line {
@@ -265,37 +265,34 @@
     color: #666;
 }
 
-.checkout-btn {
+.checkout-button {
     width: 100%;
     padding: 1rem;
-    background-color: var(--primary-color);
+    background: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 0.25rem;
-    font-weight: 600;
+    border-radius: 8px;
     cursor: pointer;
-    margin: 1rem 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1rem;
 }
 
-.checkout-btn:hover {
+.checkout-button:hover {
     background-color: var(--primary-hover);
+    color: white;
+    text-decoration: none;
 }
 
-.promo-toggle {
-    width: 100%;
-    padding: 1rem;
-    background: none;
-    border: 1px solid var(--border-color);
-    border-radius: 0.25rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    margin: 1rem 0;
+.promo-toggle,
+.promo-code {
+    display: none;
 }
 
 .cart-benefits {
     margin-top: 2rem;
+    padding: 0 1rem;
 }
 
 .benefit-item {
@@ -363,6 +360,11 @@
         top: 1rem;
         right: 1rem;
     }
+
+    .cart-summary {
+        margin-top: 2rem;
+        width: 100%;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -372,5 +374,6 @@
     
     .cart-summary {
         min-width: 100%;
+        max-width: none;
     }
 } 

@@ -235,4 +235,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->phone = $phone;
         return $this;
     }
+
+    public function getFullName(): ?string
+    {
+        if ($this->firstName && $this->lastName) {
+            return $this->firstName . ' ' . $this->lastName;
+        }
+        return null;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setAddress(?string $address): static
+    {
+        $this->street = $address;
+        return $this;
+    }
 }
