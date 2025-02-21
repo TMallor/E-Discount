@@ -17,10 +17,10 @@ class Article
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?int $class = null;
+    private ?string $class = null;
 
     #[ORM\Column(length: 255)]
-    private ?int $mainfeatures = null;
+    private ?string $mainfeatures = null;
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;

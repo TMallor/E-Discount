@@ -29,11 +29,11 @@ final class AdditemController extends AbstractController
 
                 try {
                     $imageFile->move(
-                        $this->getParameter('ima'),
+                        $this->getParameter('images_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-
+                    $this->addFlash('error', 'Une erreur est survenue lors du téléchargement de l\'image');
                 }
 
                 $item->setImage($newFilename);
