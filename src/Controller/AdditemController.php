@@ -18,7 +18,6 @@ final class AdditemController extends AbstractController
         $item = new Article();
         $form = $this->createForm(AdditemType::class, $item);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('image')->getData();
 
@@ -30,11 +29,11 @@ final class AdditemController extends AbstractController
 
                 try {
                     $imageFile->move(
-                        $this->getParameter('images_directory'),
+                        $this->getParameter('ima'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // Gérer l'exception si quelque chose se passe mal pendant le téléchargement du fichier
+
                 }
 
                 $item->setImage($newFilename);
@@ -42,7 +41,7 @@ final class AdditemController extends AbstractController
 
             $item->setPublicationDate((new \DateTime())->format('Y-m-d H:i:s'));
             $item->setAuthorId($this->getUser()->getId());
-            
+
             $entityManager = $this->container->get('doctrine')->getManager();
             $entityManager->persist($item);
             $entityManager->flush();
@@ -51,7 +50,7 @@ final class AdditemController extends AbstractController
             return $this->redirectToRoute('items');
         }
 
-        return $this->render('additem/index.html.twig', [
+        return $this->render('additem/additem.html.twig', [
             'form' => $form->createView(),
         ]);
     }
