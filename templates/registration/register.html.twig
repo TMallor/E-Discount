@@ -36,12 +36,18 @@
                     </label>
                 </div>
 
-                <button type="submit" class="button">S'INSCRIRE</button>
-
                 <div class="profile-picture-upload">
-                    <p>Profile picture</p>
-                    <input type="file" value="ethan.jpeg" class="file-input">
+                    {{ form_label(registrationForm.profilePicture) }}
+                    {{ form_widget(registrationForm.profilePicture, {
+                        'attr': {
+                            'class': 'file-input',
+                            'accept': 'image/*'
+                        }
+                    }) }}
+                    {{ form_errors(registrationForm.profilePicture) }}
                 </div>
+
+                <button type="submit" class="button">S'INSCRIRE</button>
             {{ form_end(registrationForm) }}
         </div>
         
