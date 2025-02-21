@@ -6,6 +6,7 @@ namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
@@ -21,9 +22,9 @@ final class VersionXXXXXXXX extends AbstractMigration
     {
         // Créer une nouvelle table avec la structure ULID
         $this->addSql('CREATE TABLE user_new (
-            id BLOB NOT NULL,
+            id VARCHAR(26) NOT NULL --(DC2Type:ulid),
             email VARCHAR(180) NOT NULL,
-            roles CLOB NOT NULL,
+            roles CLOB NOT NULL --(DC2Type:json),
             password VARCHAR(255) NOT NULL,
             balance DOUBLE PRECISION DEFAULT NULL,
             profile_picture VARCHAR(255) DEFAULT NULL,
@@ -37,9 +38,10 @@ final class VersionXXXXXXXX extends AbstractMigration
             PRIMARY KEY(id)
         )');
 
-        // Copier les données existantes
+        // Générer un ULID pour chaque utilisateur existant
         $this->addSql('INSERT INTO user_new 
-            SELECT hex(randomblob(16)), email, roles, password, balance, profile_picture, 
+            SELECT (lower(hex(randomblob(6))) || substr(lower(hex(randomblob(10))), 1, 20)), 
+            email, roles, password, balance, profile_picture, 
             first_name, last_name, phone, street, city, postal_code, country 
             FROM user');
 
@@ -59,7 +61,7 @@ final class VersionXXXXXXXX extends AbstractMigration
         $this->addSql('CREATE TABLE user_old (
             id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             email VARCHAR(180) NOT NULL,
-            roles CLOB NOT NULL,
+            roles CLOB NOT NULL --(DC2Type:json),
             password VARCHAR(255) NOT NULL,
             balance DOUBLE PRECISION DEFAULT NULL,
             profile_picture VARCHAR(255) DEFAULT NULL,
@@ -72,11 +74,11 @@ final class VersionXXXXXXXX extends AbstractMigration
             country VARCHAR(2) DEFAULT NULL
         )');
 
-        // Copier les données
+        // Copier les données en générant de nouveaux IDs auto-incrémentés
         $this->addSql('INSERT INTO user_old (
-            id, email, roles, password, balance, profile_picture, 
+            email, roles, password, balance, profile_picture, 
             first_name, last_name, phone, street, city, postal_code, country
-        ) SELECT CAST(id AS INTEGER), email, roles, password, balance, profile_picture, 
+        ) SELECT email, roles, password, balance, profile_picture, 
             first_name, last_name, phone, street, city, postal_code, country 
             FROM user');
 

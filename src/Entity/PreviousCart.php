@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\PreviousCartRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Ulid;
+use Symfony\Bridge\Doctrine\Types\UlidType;
 
 #[ORM\Entity(repositoryClass: PreviousCartRepository::class)]
 class PreviousCart
@@ -13,8 +15,8 @@ class PreviousCart
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $user_id = null;
+    #[ORM\Column(type: UlidType::NAME)]
+    private ?Ulid $user_id = null;
 
     #[ORM\Column]
     private ?int $article_id = null;
@@ -27,12 +29,12 @@ class PreviousCart
         return $this->id;
     }
 
-    public function getUserId(): ?int
+    public function getUserId(): ?Ulid
     {
         return $this->user_id;
     }
 
-    public function setUserId(int $user_id): static
+    public function setUserId(Ulid $user_id): static
     {
         $this->user_id = $user_id;
         return $this;

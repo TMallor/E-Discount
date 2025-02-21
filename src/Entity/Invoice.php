@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\InvoiceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Ulid;
+use Symfony\Bridge\Doctrine\Types\UlidType;
 
 #[ORM\Entity(repositoryClass: InvoiceRepository::class)]
 class Invoice
@@ -13,8 +15,8 @@ class Invoice
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $user_id = null;
+    #[ORM\Column(type: UlidType::NAME)]
+    private ?Ulid $user_id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $transaction_date = null;
@@ -36,15 +38,14 @@ class Invoice
         return $this->id;
     }
 
-    public function getUserId(): ?int
+    public function getUserId(): ?Ulid
     {
         return $this->user_id;
     }
 
-    public function setUserId(int $user_id): static
+    public function setUserId(Ulid $user_id): static
     {
         $this->user_id = $user_id;
-
         return $this;
     }
 
