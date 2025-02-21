@@ -113,7 +113,7 @@ span {
             </a>
             <nav class="main-nav">
                 <a href="{{ path('home') }}" class="{{ app.request.get('_route') == 'home' ? 'active' : '' }}">Accueil</a>
-                <a href="{{ path('item') }}" class="{{ app.request.get('_route') == 'item' ? 'active' : '' }}">Articles</a>
+                <a href="{{ path('items') }}" class="{{ app.request.get('_route') == 'items' ? 'active' : '' }}">Articles</a>
                 <a href="{{ path('additems') }}" class="{{ app.request.get('_route') == 'additems' ? 'active' : '' }}">Vendre</a>
             </nav>
         </div>
