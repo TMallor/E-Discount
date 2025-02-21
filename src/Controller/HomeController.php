@@ -15,6 +15,16 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        // Supprimer le doublon Nike
+        $articles = $entityManager->getRepository(Article::class)
+            ->findBy(['name' => 'Nike Air Max 90'], ['id' => 'ASC']);
+
+        if (count($articles) > 1) {
+            // Garder le premier, supprimer le deuxième
+            $entityManager->remove($articles[1]);
+            $entityManager->flush();
+        }
+
         // Récupérer les 4 premiers articles
         $articles = $entityManager->getRepository(Article::class)
             ->findBy([], ['id' => 'ASC'], 4);
