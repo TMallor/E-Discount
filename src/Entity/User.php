@@ -64,11 +64,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->id = new Ulid();
+        $this->roles = [];
     }
 
-    public function getId(): ?Ulid
+    public function getId(): ?string
     {
-        return $this->id;
+        return $this->id ? $this->id->toBase32() : null;
+    }
+
+    public function setId(string $id): static
+    {
+        $this->id = Ulid::fromString($id);
+        return $this;
     }
 
     public function getEmail(): ?string

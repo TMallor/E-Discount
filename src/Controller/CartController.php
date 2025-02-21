@@ -19,8 +19,11 @@ class CartController extends AbstractController
         // Récupérer l'utilisateur connecté
         $user = $this->getUser();
         
+        // Convertir l'ID en chaîne
+        $userId = (string) $user->getId();
+        
         // Récupérer les articles du panier de l'utilisateur
-        $cartItems = $entityManager->getRepository(Cart::class)->findBy(['user_id' => $user->getId()]);
+        $cartItems = $entityManager->getRepository(Cart::class)->findBy(['user_id' => $userId]);
         
         // Récupérer les détails des articles
         $articles = [];
@@ -48,16 +51,17 @@ class CartController extends AbstractController
     public function add(Article $article, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
+        $userId = (string) $user->getId();
         
         // Vérifier si l'article est déjà dans le panier
         $existingItem = $entityManager->getRepository(Cart::class)->findOneBy([
-            'user_id' => $user->getId(),
+            'user_id' => $userId,
             'article_id' => $article->getId()
         ]);
         
         if (!$existingItem) {
             $cartItem = new Cart();
-            $cartItem->setUserId($user->getId());
+            $cartItem->setUserId($userId);
             $cartItem->setArticleId($article->getId());
             
             $entityManager->persist($cartItem);
@@ -76,9 +80,10 @@ class CartController extends AbstractController
     public function remove(Article $article, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
+        $userId = (string) $user->getId();
         
         $cartItem = $entityManager->getRepository(Cart::class)->findOneBy([
-            'user_id' => $user->getId(),
+            'user_id' => $userId,
             'article_id' => $article->getId()
         ]);
         

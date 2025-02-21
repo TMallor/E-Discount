@@ -26,15 +26,14 @@ class Cart
         return $this->id;
     }
 
-    public function getUserId(): ?Ulid
+    public function getUserId(): ?string
     {
-        return $this->user_id;
+        return $this->user_id ? $this->user_id->toBase32() : null;
     }
 
-    public function setUserId(Ulid $user_id): static
+    public function setUserId(string $user_id): static
     {
-        $this->user_id = $user_id;
-
+        $this->user_id = Ulid::fromBase32($user_id);
         return $this;
     }
 
