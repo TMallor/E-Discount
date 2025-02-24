@@ -20,7 +20,6 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('profile_picture')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -49,15 +48,19 @@ class RegistrationFormType extends AbstractType
             ->add('profilePicture', FileType::class, [
                 'label' => 'Photo de profil',
                 'mapped' => false,
-                'required' => false,
+                'required' => true,
                 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez ajouter une photo de profil'
+                    ]),
                     new File([
                         'maxSize' => '2048k',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
+                            'image/webp',
                         ],
-                        'mimeTypesMessage' => 'Veuillez uploader une image valide (JPG ou PNG)',
+                        'mimeTypesMessage' => 'Veuillez uploader une image valide (JPG, PNG ou WEBP)',
                     ])
                 ],
             ])

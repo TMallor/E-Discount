@@ -9,6 +9,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[IsGranted('ROLE_USER')]
 class ProfileController extends AbstractController
@@ -57,6 +60,49 @@ class ProfileController extends AbstractController
         $entityManager->flush();
         
         $this->addFlash('success', 'Adresse mise à jour avec succès');
+        
+        return $this->redirectToRoute('app_profile');
+    }
+
+    #[Route('/profile/update-picture', name: 'app_profile_update_picture', methods: ['POST'])]
+    public function updateProfilePicture(
+        Request $request, 
+        EntityManagerInterface $entityManager,
+        SluggerInterface $slugger
+    ): Response {
+        /** @var User $user */
+        $user = $this->getUser();
+        
+        /** @var UploadedFile $profilePicture */
+        $profilePicture = $request->files->get('profile_picture');
+
+        if ($profilePicture) {
+            $originalFilename = pathinfo($profilePicture->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$profilePicture->guessExtension();
+
+            try {
+                $profilePicture->move(
+                    $this->getParameter('kernel.project_dir') . '/public/image',
+                    $newFilename
+                );
+                
+                // Supprimer l'ancienne photo si ce n'est pas la photo par défaut
+                if ($user->getProfilePicture() !== 'ethan.jpeg') {
+                    $oldFile = $this->getParameter('kernel.project_dir') . '/public/image/' . $user->getProfilePicture();
+                    if (file_exists($oldFile)) {
+                        unlink($oldFile);
+                    }
+                }
+                
+                $user->setProfilePicture($newFilename);
+                $entityManager->flush();
+                
+                $this->addFlash('success', 'Photo de profil mise à jour avec succès');
+            } catch (FileException $e) {
+                $this->addFlash('error', 'Une erreur est survenue lors de l\'upload de l\'image');
+            }
+        }
         
         return $this->redirectToRoute('app_profile');
     }

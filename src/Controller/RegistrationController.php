@@ -37,23 +37,24 @@ class RegistrationController extends AbstractController
             /** @var UploadedFile $profilePicture */
             $profilePicture = $form->get('profilePicture')->getData();
 
-            if ($profilePicture) {
-                $originalFilename = pathinfo($profilePicture->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$profilePicture->guessExtension();
+            if (!$profilePicture) {
+                $this->addFlash('error', 'La photo de profil est obligatoire');
+                return $this->redirectToRoute('app_register');
+            }
 
-                try {
-                    $profilePicture->move(
-                        $this->getParameter('profile_pictures_directory'),
-                        $newFilename
-                    );
-                    $user->setProfilePicture($newFilename);
-                } catch (FileException $e) {
-                    $this->addFlash('error', 'Une erreur est survenue lors de l\'upload de l\'image');
-                    $user->setProfilePicture('ethan.jpeg');
-                }
-            } else {
-                $user->setProfilePicture('ethan.jpeg');
+            $originalFilename = pathinfo($profilePicture->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$profilePicture->guessExtension();
+
+            try {
+                $profilePicture->move(
+                    $this->getParameter('kernel.project_dir') . '/public/image',
+                    $newFilename
+                );
+                $user->setProfilePicture($newFilename);
+            } catch (FileException $e) {
+                $this->addFlash('error', 'Une erreur est survenue lors de l\'upload de l\'image');
+                return $this->redirectToRoute('app_register');
             }
 
             // encode the plain password
