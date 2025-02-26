@@ -147,6 +147,11 @@ span {
                     <i class="fas fa-user"></i>
                 </a>
             {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin_users') }}" class="admin-icon {{ app.request.get('_route') == 'admin_users' ? 'active' : '' }}">
+                    <i class="fas fa-users-cog"></i>
+                </a>
+            {% endif %}
         </div>
     </div>
 </header>

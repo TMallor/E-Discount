@@ -21,27 +21,33 @@ class UserArticlesController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        $userId = $user->getId(); // Récupération de l'ID de l'utilisateur connecté
         
-        // Utilisation du QueryBuilder pour récupérer uniquement les articles de l'utilisateur
-        $articles = $entityManager->createQueryBuilder()
-            ->select('a')
-            ->from(Article::class, 'a')
-            ->where('a.author_id = :userId')
-            ->setParameter('userId', Ulid::fromBase32($userId)->toBase32()) // Conversion en ULID
-            ->getQuery()
-            ->getResult();
+        // Si c'est un admin, récupérer tous les articles
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $articles = $entityManager->getRepository(Article::class)->findAll();
+        } else {
+            // Sinon, récupérer uniquement les articles de l'utilisateur
+            $userId = $user->getId();
+            $articles = $entityManager->createQueryBuilder()
+                ->select('a')
+                ->from(Article::class, 'a')
+                ->where('a.author_id = :userId')
+                ->setParameter('userId', Ulid::fromBase32($userId)->toBase32())
+                ->getQuery()
+                ->getResult();
+        }
 
         return $this->render('user_articles/index.html.twig', [
             'articles' => $articles,
+            'is_admin' => $this->isGranted('ROLE_ADMIN')
         ]);
     }
 
     #[Route('/profile/articles/{id}/edit', name: 'app_user_articles_edit')]
     public function edit(Article $article, Request $request, EntityManagerInterface $entityManager): Response
     {
-        // Vérifier si l'utilisateur est le propriétaire de l'article
-        if ($article->getAuthorId() !== $this->getUser()->getId()) {
+        // Vérifier si l'utilisateur est l'auteur ou un admin
+        if (!$this->isGranted('ROLE_ADMIN') && $article->getAuthorId() !== $this->getUser()->getId()) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à modifier cet article.');
         }
 
@@ -96,6 +102,16 @@ class UserArticlesController extends AbstractController
         ]);
     }
 
+    private function removeImage(?string $imageName): void
+    {
+        if ($imageName) {
+            $imagePath = $this->getParameter('images_directory').'/'.$imageName;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+    }
+
     #[Route('/profile/articles/{id}/delete', name: 'app_user_articles_delete', methods: ['POST'])]
     public function delete(Article $article, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -104,18 +120,13 @@ class UserArticlesController extends AbstractController
             throw $this->createAccessDeniedException('Token CSRF invalide.');
         }
 
-        // Vérifier si l'utilisateur est le propriétaire de l'article
-        if ($article->getAuthorId() !== $this->getUser()->getId()) {
+        // Vérifier si l'utilisateur est l'auteur ou un admin
+        if (!$this->isGranted('ROLE_ADMIN') && $article->getAuthorId() !== $this->getUser()->getId()) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à supprimer cet article.');
         }
 
         // Supprimer l'image associée
-        if ($article->getImage()) {
-            $imagePath = $this->getParameter('images_directory').'/'.$article->getImage();
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
-        }
+        $this->removeImage($article->getImage());
 
         // Supprimer le stock associé
         $stock = $entityManager->getRepository(Stock::class)->findOneBy(['article_id' => $article->getId()]);

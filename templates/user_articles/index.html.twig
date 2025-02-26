@@ -11,7 +11,7 @@
 
     <div class="user-articles-container">
         <div class="articles-header">
-            <h1>Mes Articles</h1>
+            <h1>{% if is_admin %}Tous les articles{% else %}Mes articles{% endif %}</h1>
             <a href="{{ path('additem') }}" class="add-article-button">
                 <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -35,11 +35,20 @@
                             <p class="article-price">{{ article.price }}€</p>
                             <p class="article-category">{{ article.class }}</p>
                         </div>
+                        
+                        {% if is_admin %}
+                            <div class="article-author">
+                                <small>Auteur ID: {{ article.authorId }}</small>
+                            </div>
+                        {% endif %}
+                        
                         <div class="article-actions">
                             <a href="{{ path('app_user_articles_edit', {'id': article.id}) }}" class="edit-button">Modifier</a>
-                            <form action="{{ path('app_user_articles_delete', {'id': article.id}) }}" method="post" class="delete-form" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
+                            <form action="{{ path('app_user_articles_delete', {'id': article.id}) }}" method="post" class="delete-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
-                                <button type="submit" class="delete-button">Supprimer</button>
+                                <button type="submit" class="delete-button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">
+                                    Supprimer
+                                </button>
                             </form>
                         </div>
                     </div>
