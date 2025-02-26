@@ -92,6 +92,20 @@
     color: var(--primary-color);
 }
 
+.articles-icon {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem;
+}
+
+.articles-icon:hover {
+    color: var(--primary-color);
+}
+
+.articles-icon.active {
+    color: var(--primary-color);
+}
+
 .cart-icon.active {
     color: var(--primary-color);
 }
@@ -118,10 +132,13 @@ span {
             </nav>
         </div>
         <div class="header-right">
-            <a href="{{ path('cart') }}" class="cart-icon {{ app.request.get('_route') == 'cart' ? 'active' : '' }}">
-                <i class="fas fa-shopping-cart"></i>
-            </a>
             {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('cart') }}" class="cart-icon {{ app.request.get('_route') == 'cart' ? 'active' : '' }}">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+                <a href="{{ path('app_user_articles') }}" class="articles-icon {{ app.request.get('_route') == 'app_user_articles' ? 'active' : '' }}">
+                    <i class="fas fa-box"></i>
+                </a>
                 <a href="{{ path('app_profile') }}" class="user-icon {{ app.request.get('_route') == 'app_profile' ? 'active' : '' }}">
                     <i class="fas fa-user"></i>
                 </a>
