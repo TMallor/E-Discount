@@ -1,0 +1,144 @@
+.user-articles-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.articles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.articles-header h1 {
+    color: black;
+}
+
+.add-article-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: #4F46E5;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.add-article-button:hover {
+    background-color: #4338CA;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.article-card {
+    border: 1px solid #000;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(79, 70, 229, 0.2);
+}
+
+.article-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.article-info {
+    padding: 15px;
+}
+
+.article-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+    color: #000;
+}
+
+.article-price {
+    font-weight: bold;
+    color: #4F46E5;
+    font-size: 1.1em;
+    margin: 8px 0;
+}
+
+.article-category {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.article-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #000;
+}
+
+.edit-button, .delete-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: all 0.3s;
+}
+
+.edit-button {
+    background-color: #4F46E5;
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: #4338CA;
+}
+
+.delete-button {
+    background-color: white;
+    color: #000;
+    border: 1px solid #000;
+}
+
+.delete-button:hover {
+    background-color: #000;
+    color: white;
+}
+
+.no-articles {
+    text-align: center;
+    padding: 40px;
+    color: #000;
+}
+
+.add-first-article {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4F46E5;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.add-first-article:hover {
+    background-color: #4338CA;
+}
+
+.button-icon {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+} 

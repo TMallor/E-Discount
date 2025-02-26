@@ -31,8 +31,8 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $publication_date = null;
 
-    #[ORM\Column]
-    private ?int $author_id = null;
+    #[ORM\Column(length: 26)]
+    private ?string $author_id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
@@ -90,15 +90,14 @@ class Article
         return $this;
     }
 
-    public function getAuthorId(): ?int
+    public function getAuthorId(): ?string
     {
         return $this->author_id;
     }
 
-    public function setAuthorId(int $author_id): static
+    public function setAuthorId(string $author_id): static
     {
         $this->author_id = $author_id;
-
         return $this;
     }
 

@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Stock;
 use App\Form\AdditemType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,12 +47,21 @@ final class AdditemController extends AbstractController
             }
 
             $item->setPublicationDate((new \DateTime())->format('Y-m-d H:i:s'));
-            $item->setAuthorId((int) $this->getUser()->getId());
+            $item->setAuthorId($this->getUser()->getId());
 
+            // Persister d'abord l'article
             $this->entityManager->persist($item);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('items');
+            // Maintenant que l'article a un ID, créer l'enregistrement de stock
+            $stock = new Stock();
+            $stock->setArticleId($item->getId()); // L'ID est maintenant disponible
+            $stock->setQuantity((string) $form->get('quantity')->getData());
+            
+            $this->entityManager->persist($stock);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('app_user_articles');
         }
 
         return $this->render('additem/additem.html.twig', [

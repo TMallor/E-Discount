@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Articles{% endblock %}
+
+{% block page_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/user_articles.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+
+    <div class="user-articles-container">
+        <div class="articles-header">
+            <h1>Mes Articles</h1>
+            <a href="{{ path('additem') }}" class="add-article-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Ajouter un article
+            </a>
+        </div>
+
+        {% if articles is empty %}
+            <div class="no-articles">
+                <p>Vous n'avez pas encore ajouté d'articles.</p>
+                <a href="{{ path('additem') }}" class="add-first-article">Ajouter mon premier article</a>
+            </div>
+        {% else %}
+            <div class="articles-grid">
+                {% for article in articles %}
+                    <div class="article-card">
+                        <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.name }}" class="article-image">
+                        <div class="article-info">
+                            <h3>{{ article.name }}</h3>
+                            <p class="article-price">{{ article.price }}€</p>
+                            <p class="article-category">{{ article.class }}</p>
+                        </div>
+                        <div class="article-actions">
+                            <a href="#" class="edit-button">Modifier</a>
+                            <a href="#" class="delete-button">Supprimer</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %} 

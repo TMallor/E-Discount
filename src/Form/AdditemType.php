@@ -61,6 +61,15 @@ class AdditemType extends AbstractType
                     'placeholder' => 'Une caractéristique par ligne...'
                 ]
             ])
+            ->add('quantity', NumberType::class, [
+                'label' => 'Quantité en stock',
+                'mapped' => false,
+                'required' => true,
+                'attr' => [
+                    'min' => 1,
+                    'placeholder' => 'Ex: 10'
+                ]
+            ])
         ;
     }
 
