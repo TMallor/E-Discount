@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'article{% endblock %}
+
+{% block page_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/additem.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+
+    <div class="main-content">
+        <h1>Modifier l'article</h1>
+
+        {{ form_start(form) }}
+        <div class="titlecard">
+            <h2>Photos du produit</h2>
+        </div>
+        <label class="dotted-box">
+            {{ form_widget(form.image, {'attr': {'class': 'file-input'}}) }}
+            <img id="preview-image" src="{{ asset('uploads/images/' ~ article.image) }}" class="preview-active upload-image">
+        </label>
+
+        {# Réutilisation du même formulaire que pour l'ajout #}
+        <div class="form-group">
+            <label class="inputLabel">{{ form_label(form.name) }}</label>
+            <div class="inputContainer">
+                {{ form_widget(form.name, {'attr': {'class': 'customInput'}}) }}
+                <div class="inputUnderline"></div>
+            </div>
+        </div>
+
+        {# Répéter pour les autres champs du formulaire #}
+        {{ form_rest(form) }}
+
+        <button type="submit" class="btn">Enregistrer les modifications</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %} 

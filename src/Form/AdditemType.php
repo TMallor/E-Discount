@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\File;
 
 class AdditemType extends AbstractType
 {
@@ -19,11 +20,18 @@ class AdditemType extends AbstractType
         $builder
             ->add('image', FileType::class, [
                 'label' => 'Photos du produit',
-                'mapped' => true,
-                'required' => true,
-                'attr' => [
-                    'accept' => 'image/*',
-                    'class' => 'image-upload'
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2048k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez uploader une image valide (JPG, PNG ou WEBP)',
+                    ])
                 ]
             ])
             ->add('name', TextType::class, [

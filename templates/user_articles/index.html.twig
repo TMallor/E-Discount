@@ -36,8 +36,11 @@
                             <p class="article-category">{{ article.class }}</p>
                         </div>
                         <div class="article-actions">
-                            <a href="#" class="edit-button">Modifier</a>
-                            <a href="#" class="delete-button">Supprimer</a>
+                            <a href="{{ path('app_user_articles_edit', {'id': article.id}) }}" class="edit-button">Modifier</a>
+                            <form action="{{ path('app_user_articles_delete', {'id': article.id}) }}" method="post" class="delete-form" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+                                <button type="submit" class="delete-button">Supprimer</button>
+                            </form>
                         </div>
                     </div>
                 {% endfor %}

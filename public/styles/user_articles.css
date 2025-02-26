@@ -141,4 +141,26 @@
     width: 20px;
     height: 20px;
     stroke: currentColor;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.delete-button {
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: white;
+    color: #000;
+    border: 1px solid #000;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #000;
+    color: white;
 } 
