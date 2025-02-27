@@ -1,0 +1,8 @@
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }} {% if label == 'error' %}shake{% endif %}">
+            {{ message }}
+            <button type="button" class="close-alert">&times;</button>
+        </div>
+    {% endfor %}
+{% endfor %} 

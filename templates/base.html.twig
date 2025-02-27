@@ -3,18 +3,22 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="{{ asset('image/E.png') }}" type="image/png">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('styles/alerts.css') }}">
             {# Ne pas mettre register.css ici #}
         {% endblock %}
         {% block page_stylesheets %}{% endblock %}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
         {% block javascripts %}
+            <script src="{{ asset('scripts/alerts.js') }}"></script>
+            {% block page_javascripts %}{% endblock %}
         {% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}">
+        {% include '_flash_messages.html.twig' %}
         {% block body %}{% endblock %}
     </body>
 </html>

@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use App\Enum\ArticleCategory;
 
 class AdditemType extends AbstractType
 {
@@ -21,8 +23,11 @@ class AdditemType extends AbstractType
             ->add('image', FileType::class, [
                 'label' => 'Photos du produit',
                 'mapped' => false,
-                'required' => false,
+                'required' => true,
                 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez ajouter une image'
+                    ]),
                     new File([
                         'maxSize' => '2048k',
                         'mimeTypes' => [
@@ -40,16 +45,13 @@ class AdditemType extends AbstractType
                     'placeholder' => 'Ex: Maillot exterieur PSG'
                 ]
             ])
-            ->add('class', ChoiceType::class, [
+            ->add('category', ChoiceType::class, [
                 'label' => 'Catégorie',
-                'choices' => [
-                    'Chaussures' => 'chaussures',
-                    'Maillots' => 'maillots',
-                    'Shorts' => 'shorts',
-                    'Joggings' => 'joggings',
-                    'Chaussettes' => 'chaussettes'
-                ],
-                'required' => true
+                'choices' => ArticleCategory::getChoices(),
+                'required' => true,
+                'attr' => [
+                    'class' => 'customInput'
+                ]
             ])
             ->add('price', NumberType::class, [
                 'label' => 'Prix (€)',

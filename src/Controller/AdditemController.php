@@ -24,44 +24,49 @@ final class AdditemController extends AbstractController
         $item = new Article();
         $form = $this->createForm(AdditemType::class, $item);
         $form->handleRequest($request);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('image')->getData();
 
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $slugger = new AsciiSlugger();
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-                try {
-                    $imageFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                    );
-                    $this->addFlash('success', 'Image uploadée dans : ' . $this->getParameter('images_directory') . '/' . $newFilename);
-                } catch (FileException $e) {
-                    $this->addFlash('error', 'Une erreur est survenue lors du téléchargement de l\'image');
-                }
-
-                $item->setImage($newFilename);
+            if (!$imageFile) {
+                $this->addFlash('error', 'L\'image est obligatoire');
+                return $this->redirectToRoute('additem');
             }
 
-            $item->setPublicationDate((new \DateTime())->format('Y-m-d H:i:s'));
-            $item->setAuthorId($this->getUser()->getId());
+            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $slugger = new AsciiSlugger();
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
 
-            // Persister d'abord l'article
-            $this->entityManager->persist($item);
-            $this->entityManager->flush();
+            try {
+                $imageFile->move(
+                    $this->getParameter('images_directory'),
+                    $newFilename
+                );
+                
+                $item->setImage($newFilename);
+                $item->setAuthorId($this->getUser()->getId());
+                $item->setPublicationDate(date('Y-m-d H:i:s'));
 
-            // Maintenant que l'article a un ID, créer l'enregistrement de stock
-            $stock = new Stock();
-            $stock->setArticleId($item->getId()); // L'ID est maintenant disponible
-            $stock->setQuantity((string) $form->get('quantity')->getData());
-            
-            $this->entityManager->persist($stock);
-            $this->entityManager->flush();
+                // Persister et flusher l'article d'abord
+                $this->entityManager->persist($item);
+                $this->entityManager->flush();
+                
+                // Maintenant que l'article a un ID, créer le stock
+                $stock = new Stock();
+                $stock->setArticleId($item->getId());
+                $stock->setQuantity((string) $form->get('quantity')->getData());
+                
+                // Persister et flusher le stock
+                $this->entityManager->persist($stock);
+                $this->entityManager->flush();
 
-            return $this->redirectToRoute('app_user_articles');
+                $this->addFlash('success', 'Article ajouté avec succès');
+                return $this->redirectToRoute('app_user_articles');
+            } catch (FileException $e) {
+                $this->addFlash('error', 'Une erreur est survenue lors du téléchargement de l\'image');
+                return $this->redirectToRoute('additem');
+            }
         }
 
         return $this->render('additem/additem.html.twig', [

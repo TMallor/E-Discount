@@ -3,6 +3,8 @@
 namespace App\Command;
 
 use App\Entity\Article;
+use App\Entity\Stock;
+use App\Enum\ArticleCategory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -15,17 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class UpdateArticleImageCommand extends Command
 {
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    ) {
         parent::__construct();
-        $this->entityManager = $entityManager;
-    }
-
-    protected function configure(): void
-    {
-        $this->setDescription('Met à jour l\'image de l\'article Nike');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -34,7 +29,7 @@ class UpdateArticleImageCommand extends Command
             ->findOneBy(['name' => 'Nike Air Max 90']);
 
         if ($article) {
-            $article->setImage('image/nike.png');
+            $article->setImage('nike.png');
             $this->entityManager->flush();
             $output->writeln('Image mise à jour avec succès');
             return Command::SUCCESS;
@@ -42,18 +37,26 @@ class UpdateArticleImageCommand extends Command
 
         $article = new Article();
         $article->setName('Nike Air Max 90');
-        $article->setClass('chaussures');
+        $article->setCategory(ArticleCategory::CHAUSSURES->value);
         $article->setMainfeatures('Chaussures de sport confortables');
         $article->setDescription('Les Nike Air Max 90 sont des chaussures de sport emblématiques qui offrent un excellent confort et un style intemporel.');
         $article->setPrice(129.99);
         $article->setPublicationDate((new \DateTime())->format('Y-m-d H:i:s'));
-        $article->setAuthorId(1);
-        $article->setImage('image/nike.png');
+        $article->setAuthorId('1');
+        $article->setImage('nike.png');
 
         $this->entityManager->persist($article);
         $this->entityManager->flush();
+
+        // Créer le stock pour l'article
+        $stock = new Stock();
+        $stock->setArticleId($article->getId());
+        $stock->setQuantity('15');
         
-        $output->writeln('Article Nike créé avec succès');
+        $this->entityManager->persist($stock);
+        $this->entityManager->flush();
+
+        $output->writeln('Article Nike Air Max 90 et son stock créés avec succès');
         return Command::SUCCESS;
     }
 } 

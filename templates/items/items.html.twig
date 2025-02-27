@@ -2,32 +2,6 @@
 
 {% block title %}Articles - E-Discount{% endblock %}
 
-{% block body %}
-    {% include 'header.html.twig' %}
-
-    <main class="container">
-        <h1>Nos Articles</h1>
-        
-        <div class="articles-grid">
-            {% for article in articles %}
-                <div class="article-card">
-                    <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.name }}">
-                    <div class="article-info">
-                        <h3>{{ article.name }}</h3>
-                        <p>{{ article.description }}</p>
-                        <p class="price">{{ article.price }}€</p>
-                        <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart-btn">
-                            Ajouter au panier
-                        </a>
-                    </div>
-                </div>
-            {% else %}
-                <p>Aucun produit disponible pour le moment.</p>
-            {% endfor %}
-        </div>
-    </main>
-{% endblock %}
-
 {% block stylesheets %}
     {{ parent() }}
     <style>
@@ -104,5 +78,89 @@
         .add-to-cart-btn:hover {
             background: #1d4ed8;
         }
+
+        .categories-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .category-button:hover,
+        .category-button.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .category-section {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
     </style>
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+
+    <main class="container">
+        <h1>Nos Articles</h1>
+
+        <nav class="categories-nav">
+            <a href="{{ path('items') }}" class="category-button {{ not selectedCategory ? 'active' }}">
+                Tous
+            </a>
+            {% for category in categories %}
+                <a href="{{ path('items', {'category': category.value}) }}" 
+                   class="category-button {{ selectedCategory == category.value ? 'active' }}">
+                    {{ category.value }}
+                </a>
+            {% endfor %}
+        </nav>
+
+        {% if selectedCategory %}
+            {# Affichage d'une seule catégorie #}
+            <div class="category-section">
+                <h2 class="category-title">{{ selectedCategory }}</h2>
+                <div class="articles-grid">
+                    {% for article in articlesByCategory[selectedCategory] ?? [] %}
+                        {% include 'items/_article_card.html.twig' with {'article': article} %}
+                    {% else %}
+                        <p>Aucun article dans cette catégorie.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            {# Affichage de toutes les catégories #}
+            {% for category in categories %}
+                {% if articlesByCategory[category.value] is defined and articlesByCategory[category.value]|length > 0 %}
+                    <div class="category-section">
+                        <h2 class="category-title">{{ category.value }}</h2>
+                        <div class="articles-grid">
+                            {% for article in articlesByCategory[category.value] %}
+                                {% include 'items/_article_card.html.twig' with {'article': article} %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </main>
 {% endblock %} 

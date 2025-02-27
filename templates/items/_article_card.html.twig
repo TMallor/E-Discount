@@ -1,0 +1,17 @@
+<div class="article-card">
+    <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.name }}">
+    <div class="article-info">
+        <h3>{{ article.name }}</h3>
+        <p>{{ article.description }}</p>
+        <p class="price">{{ article.price }}€</p>
+        {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart-btn">
+                Ajouter au panier
+            </a>
+        {% else %}
+            <a href="{{ path('app_login') }}" class="add-to-cart-btn">
+                Connectez-vous pour acheter
+            </a>
+        {% endif %}
+    </div>
+</div> 

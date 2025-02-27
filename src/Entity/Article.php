@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Enum\ArticleCategory;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -17,7 +18,7 @@ class Article
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $class = null;
+    private ?string $category = null;
 
     #[ORM\Column(length: 255)]
     private ?string $mainfeatures = null;
@@ -113,14 +114,14 @@ class Article
         return $this;
     }
 
-    public function getClass(): ?string
+    public function getCategory(): ?string
     {
-        return $this->class;
+        return $this->category;
     }
 
-    public function setClass(string $class): static
+    public function setCategory(string $category): static
     {
-        $this->class = $class;
+        $this->category = $category;
         return $this;
     }
 
