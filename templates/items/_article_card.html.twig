@@ -1,17 +1,25 @@
 <div class="article-card">
-    <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.name }}">
+    <a href="{{ path('article_detail', {'id': article.id}) }}" class="article-image-link">
+        <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.name }}">
+    </a>
     <div class="article-info">
-        <h3>{{ article.name }}</h3>
-        <p>{{ article.description }}</p>
+        <h3>
+            <a href="{{ path('article_detail', {'id': article.id}) }}" class="product-title-link" style="text-decoration: none;">
+                {{ article.name }}
+            </a>
+        </h3>
+        <p class="description">{{ article.description }}</p>
         <p class="price">{{ article.price }}€</p>
-        {% if is_granted('ROLE_USER') %}
-            <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart-btn">
-                Ajouter au panier
-            </a>
-        {% else %}
-            <a href="{{ path('app_login') }}" class="add-to-cart-btn">
-                Connectez-vous pour acheter
-            </a>
-        {% endif %}
+        <div class="button-container">
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart-btn">
+                    Ajouter au panier
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="add-to-cart-btn">
+                    Connectez-vous pour acheter
+                </a>
+            {% endif %}
+        </div>
     </div>
 </div> 

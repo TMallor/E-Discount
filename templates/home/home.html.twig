@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
     {% include 'header.html.twig' %}
 
@@ -24,20 +28,32 @@
         </section>
 
         <section class="featured-products">
-            <h2>Nos produits vedettes</h2>
+            <h2>Derniers articles ajoutés</h2>
             <div class="product-grid">
                 {% for article in articles %}
                     <div class="product-card">
-                        <div class="product-image">
-                            <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.name }}">
-                        </div>
+                        <a href="{{ path('article_detail', {'id': article.id}) }}" class="product-image-link">
+                            <div class="product-image">
+                                <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.name }}">
+                            </div>
+                        </a>
                         <div class="product-info">
-                            <h3>{{ article.name }}</h3>
+                            <h3>
+            <a href="{{ path('article_detail', {'id': article.id}) }}" class="product-title-link" style="text-decoration: none;">
+                                    {{ article.name }}
+                                </a>
+                            </h3>
                             <p class="description">{{ article.description }}</p>
                             <p class="price">{{ article.price }} €</p>
-                            <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart">
-                                Ajouter au panier
-                            </a>
+                            {% if is_granted('ROLE_USER') %}
+                                <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart">
+                                    Ajouter au panier
+                                </a>
+                            {% else %}
+                                <a href="{{ path('app_login') }}" class="add-to-cart">
+                                    Connectez-vous pour acheter
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 {% else %}

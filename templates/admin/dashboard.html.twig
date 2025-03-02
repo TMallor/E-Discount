@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration - E-Discount{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-nav a {
+            padding: 0.5rem 1rem;
+            background: #f3f4f6;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .admin-nav a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+
+    <div class="admin-container">
+        <h1>Tableau de bord administrateur</h1>
+
+        <nav class="admin-nav">
+            <a href="{{ path('admin_dashboard') }}" class="active">Tableau de bord</a>
+            <a href="{{ path('admin_articles') }}">Articles</a>
+            <a href="{{ path('admin_users') }}">Utilisateurs</a>
+        </nav>
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-number">{{ users|length }}</div>
+                <div class="stat-label">Utilisateurs inscrits</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ articles|length }}</div>
+                <div class="stat-label">Articles en vente</div>
+            </div>
+        </div>
+
+        <h2>Derniers articles ajoutés</h2>
+        <div class="articles-grid">
+            {% for article in articles|slice(0, 5) %}
+                {% include 'items/_article_card.html.twig' with {'article': article} %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %} 

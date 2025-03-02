@@ -2,8 +2,140 @@
 
 {% block title %}Mes Articles{% endblock %}
 
-{% block page_stylesheets %}
-    <link rel="stylesheet" href="{{ asset('styles/user_articles.css') }}">
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .user-articles-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .article-info {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .article-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .article-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin: 0;
+        }
+
+        .article-category {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .article-author {
+            padding: 0 1rem;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .article-author small {
+            display: block;
+            margin: 0;
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            justify-content: center;
+            margin-top: auto;
+        }
+
+        .edit-button, .delete-button {
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            width: 120px; /* Largeur fixe pour les deux boutons */
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .edit-button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+        }
+
+        .edit-button:hover {
+            background: #4338ca;
+        }
+
+        .delete-button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background: #b91c1c;
+        }
+
+        .delete-form {
+            margin: 0;
+        }
+
+        .add-article-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .button-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .articles-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
