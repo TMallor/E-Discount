@@ -38,6 +38,9 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    #[ORM\OneToOne(mappedBy: 'article', targetEntity: Stock::class, cascade: ['persist', 'remove'])]
+    private ?Stock $stock = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -133,6 +136,23 @@ class Article
     public function setMainfeatures(string $mainfeatures): static
     {
         $this->mainfeatures = $mainfeatures;
+        return $this;
+    }
+
+    public function getStock(): ?Stock
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?Stock $stock): self
+    {
+        $this->stock = $stock;
+        
+        // Set the owning side of the relation if necessary
+        if ($stock !== null && $stock->getArticle() !== $this) {
+            $stock->setArticle($this);
+        }
+
         return $this;
     }
 }

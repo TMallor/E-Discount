@@ -13,38 +13,42 @@ class Stock
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $article_id = null;
+    #[ORM\OneToOne(targetEntity: Article::class)]
+    #[ORM\JoinColumn(name: "article_id", referencedColumnName: "id")]
+    private ?Article $article = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $quantity = null;
+    #[ORM\Column]
+    private ?int $quantity = 0;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getArticleId(): ?int
+    public function getArticle(): ?Article
     {
-        return $this->article_id;
+        return $this->article;
     }
 
-    public function setArticleId(int $article_id): static
+    public function setArticle(?Article $article): self
     {
-        $this->article_id = $article_id;
-
+        $this->article = $article;
         return $this;
     }
 
-    public function getQuantity(): ?string
+    public function getQuantity(): ?int
     {
         return $this->quantity;
     }
 
-    public function setQuantity(string $quantity): static
+    public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
-
         return $this;
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->quantity > 0;
     }
 }

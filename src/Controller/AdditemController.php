@@ -48,16 +48,13 @@ final class AdditemController extends AbstractController
                 $item->setAuthorId($this->getUser()->getId());
                 $item->setPublicationDate(date('Y-m-d H:i:s'));
 
-                // Persister et flusher l'article d'abord
-                $this->entityManager->persist($item);
-                $this->entityManager->flush();
-                
-                // Maintenant que l'article a un ID, créer le stock
+                // Création du stock
                 $stock = new Stock();
-                $stock->setArticleId($item->getId());
-                $stock->setQuantity((string) $form->get('quantity')->getData());
-                
-                // Persister et flusher le stock
+                $stock->setQuantity((int) $form->get('quantity')->getData());
+                $stock->setArticle($item);
+                $item->setStock($stock);
+
+                $this->entityManager->persist($item);
                 $this->entityManager->persist($stock);
                 $this->entityManager->flush();
 

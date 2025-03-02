@@ -57,7 +57,14 @@
                                 </div>
                             </div>
                             <div class="item-quantity">
-                                <input type="number" value="1" min="1">
+                                <form action="{{ path('cart_update_quantity', {'id': item.article.id}) }}" method="post" class="quantity-form">
+                                    <input type="number" 
+                                           name="quantity" 
+                                           value="{{ item.quantity }}" 
+                                           min="1" 
+                                           max="{{ item.article.stock.quantity }}"
+                                           onchange="this.form.submit()">
+                                </form>
                             </div>
                             <div class="item-total">{{ item.article.price }}€</div>
                             <a href="{{ path('cart_remove', {'id': item.article.id}) }}" class="remove-item">×</a>
@@ -70,7 +77,11 @@
                 <div class="cart-summary">
                     <h2>Récapitulatif</h2>
                     <div class="summary-line">
-                        <span>Sous-total ({{ cart_items|length }} article{% if cart_items|length > 1 %}s{% endif %})</span>
+                        {% set total_items = 0 %}
+                        {% for item in cart_items %}
+                            {% set total_items = total_items + item.quantity %}
+                        {% endfor %}
+                        <span>Sous-total ({{ total_items }} article{% if total_items > 1 %}s{% endif %})</span>
                         <span>{{ total }}€</span>
                     </div>
                     <div class="summary-line">

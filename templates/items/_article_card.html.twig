@@ -10,16 +10,26 @@
         </h3>
         <p class="description">{{ article.description }}</p>
         <p class="price">{{ article.price }}€</p>
-        <div class="button-container">
+        
+        {% if article.stock and article.stock.isAvailable %}
+            <p class="stock-status available">En stock ({{ article.stock.quantity }} disponibles)</p>
             {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart-btn">
-                    Ajouter au panier
-                </a>
+                <form action="{{ path('cart_add', {'id': article.id}) }}" method="post" class="add-to-cart-form">
+                    <select name="quantity" class="quantity-select">
+                        {% for i in 1..article.stock.quantity %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="add-to-cart-btn">Ajouter au panier</button>
+                </form>
             {% else %}
                 <a href="{{ path('app_login') }}" class="add-to-cart-btn">
                     Connectez-vous pour acheter
                 </a>
             {% endif %}
-        </div>
+        {% else %}
+            <p class="stock-status unavailable">Indisponible</p>
+            <button class="add-to-cart-btn" disabled>Indisponible</button>
+        {% endif %}
     </div>
 </div> 

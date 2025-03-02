@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use App\Enum\ArticleCategory;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class AdditemType extends AbstractType
 {
@@ -40,10 +42,7 @@ class AdditemType extends AbstractType
                 ]
             ])
             ->add('name', TextType::class, [
-                'label' => 'Titre de l\'annonce',
-                'attr' => [
-                    'placeholder' => 'Ex: Maillot exterieur PSG'
-                ]
+                'label' => 'Nom du produit'
             ])
             ->add('category', ChoiceType::class, [
                 'label' => 'Catégorie',
@@ -71,13 +70,20 @@ class AdditemType extends AbstractType
                     'placeholder' => 'Une caractéristique par ligne...'
                 ]
             ])
-            ->add('quantity', NumberType::class, [
+            ->add('quantity', IntegerType::class, [
                 'label' => 'Quantité en stock',
                 'mapped' => false,
-                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer une quantité'
+                    ]),
+                    new GreaterThanOrEqual([
+                        'value' => 0,
+                        'message' => 'La quantité ne peut pas être négative'
+                    ])
+                ],
                 'attr' => [
-                    'min' => 1,
-                    'placeholder' => 'Ex: 10'
+                    'min' => 0
                 ]
             ])
         ;
