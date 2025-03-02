@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.name }} - E-Discount{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .article-detail {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .article-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .article-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: contain;
+            background: #f8f8f8;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .article-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .article-name {
+            font-size: 2rem;
+            color: #333;
+            margin: 0;
+        }
+
+        .article-price {
+            font-size: 1.75rem;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .article-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .article-features {
+            margin-top: 1rem;
+        }
+
+        .features-title {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .add-to-cart {
+            background: #2563eb;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            margin-top: auto;
+        }
+
+        .add-to-cart:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+
+    <div class="article-detail">
+        <div class="article-content">
+            <div class="article-image-container">
+                <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.name }}" class="article-image">
+            </div>
+            
+            <div class="article-info">
+                <h1 class="article-name">{{ article.name }}</h1>
+                <p class="article-price">{{ article.price }}€</p>
+                <p class="article-description">{{ article.description }}</p>
+                
+                <div class="article-features">
+                    <h2 class="features-title">Caractéristiques principales</h2>
+                    <p>{{ article.mainfeatures }}</p>
+                </div>
+
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart">
+                        Ajouter au panier
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="add-to-cart">
+                        Connectez-vous pour acheter
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %} 

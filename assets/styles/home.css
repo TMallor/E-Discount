@@ -119,6 +119,10 @@
     transform: translateY(-5px);
 }
 
+.product-title-link {
+    color: #333;
+    text-decoration: none;
+}
 /* Ajoutez ces styles après les styles du header et avant les styles de main-content */
 
 .hero-section { 
