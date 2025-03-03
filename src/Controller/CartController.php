@@ -49,7 +49,7 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/cart/add/{id}', name: 'cart_add', methods: ['POST'])]
+    #[Route('/cart/add/{id}', name: 'cart_add', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER', message: 'Veuillez vous connecter pour ajouter au panier')]
     public function addToCart(Request $request, Article $article): Response
     {
@@ -60,7 +60,10 @@ class CartController extends AbstractController
             return $this->redirectToRoute('items');
         }
 
-        $quantity = min((int)$request->request->get('quantity', 1), $stock->getQuantity());
+        // Récupérer la quantité depuis la requête POST ou utiliser 1 par défaut pour les requêtes GET
+        $quantity = $request->isMethod('POST') 
+            ? min((int)$request->request->get('quantity', 1), $stock->getQuantity())
+            : min(1, $stock->getQuantity());
         
         // Vérifier si l'article est déjà dans le panier
         $user = $this->getUser();
@@ -90,6 +93,13 @@ class CartController extends AbstractController
         $this->entityManager->flush();
         
         $this->addFlash('success', 'Article ajouté au panier');
+        
+        // Rediriger vers la page précédente ou vers le panier si pas de referer
+        $referer = $request->headers->get('referer');
+        if ($referer) {
+            return $this->redirect($referer);
+        }
+        
         return $this->redirectToRoute('cart');
     }
 

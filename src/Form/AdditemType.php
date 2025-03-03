@@ -25,11 +25,8 @@ class AdditemType extends AbstractType
             ->add('image', FileType::class, [
                 'label' => 'Photos du produit',
                 'mapped' => false,
-                'required' => true,
+                'required' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez ajouter une image'
-                    ]),
                     new File([
                         'maxSize' => '2048k',
                         'mimeTypes' => [

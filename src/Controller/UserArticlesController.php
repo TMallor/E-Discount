@@ -48,7 +48,10 @@ class UserArticlesController extends AbstractController
     public function edit(Article $article, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Vérifier si l'utilisateur est l'auteur ou un admin
-        if (!$this->isGranted('ROLE_ADMIN') && $article->getAuthorId() !== $this->getUser()->getId()) {
+        $userId = $this->getUser()->getId();
+        $formattedUserId = Ulid::fromBase32($userId)->toBase32();
+        
+        if (!$this->isGranted('ROLE_ADMIN') && $article->getAuthorId() !== $formattedUserId) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à modifier cet article.');
         }
 
@@ -59,8 +62,10 @@ class UserArticlesController extends AbstractController
             // Gérer le téléchargement de la nouvelle image si elle existe
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
-                // Supprimer l'ancienne image
-                $this->removeImage($article->getImage());
+                // Supprimer l'ancienne image si elle existe
+                if ($article->getImage()) {
+                    $this->removeImage($article->getImage());
+                }
 
                 // Enregistrer la nouvelle image
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -99,7 +104,10 @@ class UserArticlesController extends AbstractController
                 $entityManager->persist($stock);
             }
 
+            // S'assurer que les modifications sont bien enregistrées
+            $entityManager->persist($article);
             $entityManager->flush();
+            
             $this->addFlash('success', 'Article modifié avec succès');
             return $this->redirectToRoute('app_user_articles');
         }
@@ -121,7 +129,12 @@ class UserArticlesController extends AbstractController
         if ($imageName) {
             $imagePath = $this->getParameter('images_directory').'/'.$imageName;
             if (file_exists($imagePath)) {
-                unlink($imagePath);
+                try {
+                    unlink($imagePath);
+                } catch (\Exception $e) {
+                    // Log l'erreur mais continue l'exécution
+                    error_log('Impossible de supprimer l\'image: ' . $e->getMessage());
+                }
             }
         }
     }

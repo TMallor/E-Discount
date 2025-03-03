@@ -4,6 +4,39 @@
 
 {% block page_stylesheets %}
     <link rel="stylesheet" href="{{ asset('styles/additem.css') }}">
+    <style>
+        .image-upload-container {
+            position: relative;
+            width: 100%;
+            text-align: center;
+        }
+        .change-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+        .dotted-box:hover .change-image-overlay {
+            opacity: 1;
+        }
+        .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -15,10 +48,14 @@
         {{ form_start(form) }}
         <div class="titlecard">
             <h2>Photos du produit</h2>
+            <p class="text-muted">Cliquez sur l'image pour la modifier</p>
         </div>
-        <label class="dotted-box">
-            {{ form_widget(form.image, {'attr': {'class': 'file-input'}}) }}
+        <label class="dotted-box image-upload-container">
+            {{ form_widget(form.image, {'attr': {'class': 'file-input', 'id': 'article-image-input'}}) }}
             <img id="preview-image" src="{{ asset('uploads/images/' ~ article.image) }}" class="preview-active upload-image">
+            <div class="change-image-overlay">
+                <span>Cliquez pour changer l'image</span>
+            </div>
         </label>
 
         {# Réutilisation du même formulaire que pour l'ajout #}
@@ -36,4 +73,26 @@
         <button type="submit" class="btn">Enregistrer les modifications</button>
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageInput = document.getElementById('article-image-input');
+            const previewImage = document.getElementById('preview-image');
+            
+            imageInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                    }
+                    
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+    </script>
 {% endblock %} 

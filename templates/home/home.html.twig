@@ -4,6 +4,103 @@
 
 {% block page_stylesheets %}
     <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
+    <style>
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .product-info h3 {
+            margin: 0 0 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .product-title-link {
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .product-title-link:hover {
+            color: #2563eb;
+        }
+        
+        .description {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin: 0.5rem 0;
+        }
+        
+        .add-to-cart {
+            display: inline-block;
+            width: 100%;
+            padding: 0.75rem 0;
+            background: #4f46e5;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s;
+            margin-top: 0.5rem;
+        }
+        
+        .add-to-cart:hover {
+            background: #4338ca;
+        }
+    </style>
 {% endblock %}
 
 {% block stylesheets %}
@@ -12,6 +109,7 @@
 
 {% block body %}
     {% include 'header.html.twig' %}
+    {% include '_flash_messages.html.twig' %}
 
     <main class="main-content">
         <section class="hero-section">
@@ -39,20 +137,27 @@
                         </a>
                         <div class="product-info">
                             <h3>
-            <a href="{{ path('article_detail', {'id': article.id}) }}" class="product-title-link" style="text-decoration: none;">
+                                <a href="{{ path('article_detail', {'id': article.id}) }}" class="product-title-link">
                                     {{ article.name }}
                                 </a>
                             </h3>
                             <p class="description">{{ article.description }}</p>
                             <p class="price">{{ article.price }} €</p>
-                            {% if is_granted('ROLE_USER') %}
-                                <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart">
-                                    Ajouter au panier
-                                </a>
+                            
+                            {% if article.stock and article.stock.isAvailable %}
+                                {% if is_granted('ROLE_USER') %}
+                                    <a href="{{ path('cart_add', {'id': article.id}) }}" class="add-to-cart">
+                                        Ajouter au panier
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('app_login') }}" class="add-to-cart">
+                                        Connectez-vous pour acheter
+                                    </a>
+                                {% endif %}
                             {% else %}
-                                <a href="{{ path('app_login') }}" class="add-to-cart">
-                                    Connectez-vous pour acheter
-                                </a>
+                                <button class="add-to-cart" disabled style="background-color: #ccc; cursor: not-allowed;">
+                                    Indisponible
+                                </button>
                             {% endif %}
                         </div>
                     </div>

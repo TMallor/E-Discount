@@ -25,9 +25,15 @@ final class HomeController extends AbstractController
             $entityManager->flush();
         }
 
-        // Récupérer les 4 premiers articles
-        $articles = $entityManager->getRepository(Article::class)
-            ->findBy([], ['id' => 'ASC'], 4);
+        // Récupérer les 4 premiers articles avec leurs stocks
+        $articles = $entityManager->createQueryBuilder()
+            ->select('a', 's')
+            ->from(Article::class, 'a')
+            ->leftJoin('a.stock', 's')
+            ->orderBy('a.id', 'ASC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
 
         return $this->render('home/home.html.twig', [
             'articles' => $articles
