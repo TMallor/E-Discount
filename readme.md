@@ -24,7 +24,7 @@ E-Discount est une plateforme e-commerce spécialisée dans la vente d'articles 
 
 ### 1. Cloner le projet
 ```bash
-git clone [https://github.com/TMallor/E-Discount.git]
+git clone https://github.com/TMallor/E-Discount.git
 cd E-Discount
 ```
 
@@ -40,7 +40,9 @@ npm run build
 
 ### 3. Configuration de la base de données
 ```bash
-aller voir la base de données dans le fichier dans ce repo [https://github.com/TMallor/Base-de-donn-e-E-Discount.git] et placé la dans le dossier var 
+Pour accéder à la base de données utilisée dans ce projet, veuillez consulter le dépôt suivant :
+
+[Base de données E-Discount](https://github.com/TMallor/Base-de-donn-e-E-Discount)
 ```
 
 ### 3.1 Effectuer les migrations
