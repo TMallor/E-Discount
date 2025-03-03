@@ -13,6 +13,7 @@ use App\Entity\Stock;
 use App\Form\AdditemType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[IsGranted('ROLE_USER')]
 class UserArticlesController extends AbstractController
@@ -55,34 +56,47 @@ class UserArticlesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Gérer l'upload de la nouvelle image si elle existe
+            // Gérer le téléchargement de la nouvelle image si elle existe
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
+                // Supprimer l'ancienne image
+                $this->removeImage($article->getImage());
+
+                // Enregistrer la nouvelle image
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+                $slugger = new AsciiSlugger();
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
 
                 try {
                     $imageFile->move(
                         $this->getParameter('images_directory'),
                         $newFilename
                     );
-                    // Supprimer l'ancienne image si elle existe
-                    if ($article->getImage()) {
-                        $oldImagePath = $this->getParameter('images_directory').'/'.$article->getImage();
-                        if (file_exists($oldImagePath)) {
-                            unlink($oldImagePath);
-                        }
-                    }
                     $article->setImage($newFilename);
                 } catch (FileException $e) {
                     $this->addFlash('error', 'Une erreur est survenue lors du téléchargement de l\'image');
+                    return $this->redirectToRoute('app_user_articles_edit', ['id' => $article->getId()]);
                 }
             }
 
+            // Mettre à jour les autres champs de l'article
+            $article->setName($form->get('name')->getData());
+            $article->setCategory($form->get('category')->getData());
+            $article->setMainfeatures($form->get('mainfeatures')->getData());
+            $article->setDescription($form->get('description')->getData());
+            $article->setPrice($form->get('price')->getData());
+
             // Mettre à jour le stock
-            $stock = $entityManager->getRepository(Stock::class)->findOneBy(['article_id' => $article->getId()]);
+            $stock = $entityManager->getRepository(Stock::class)->findOneBy(['article' => $article]);
             if ($stock) {
-                $stock->setQuantity((string) $form->get('quantity')->getData());
+                $stock->setQuantity((int) $form->get('quantity')->getData());
+            } else {
+                // Créer un nouveau stock si nécessaire
+                $stock = new Stock();
+                $stock->setArticle($article);
+                $stock->setQuantity((int) $form->get('quantity')->getData());
+                $entityManager->persist($stock);
             }
 
             $entityManager->flush();
@@ -91,7 +105,7 @@ class UserArticlesController extends AbstractController
         }
 
         // Récupérer le stock pour pré-remplir le champ quantité
-        $stock = $entityManager->getRepository(Stock::class)->findOneBy(['article_id' => $article->getId()]);
+        $stock = $entityManager->getRepository(Stock::class)->findOneBy(['article' => $article]);
         if ($stock) {
             $form->get('quantity')->setData($stock->getQuantity());
         }
@@ -129,7 +143,7 @@ class UserArticlesController extends AbstractController
         $this->removeImage($article->getImage());
 
         // Supprimer le stock associé
-        $stock = $entityManager->getRepository(Stock::class)->findOneBy(['article_id' => $article->getId()]);
+        $stock = $entityManager->getRepository(Stock::class)->findOneBy(['article' => $article]);
         if ($stock) {
             $entityManager->remove($stock);
         }

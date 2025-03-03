@@ -51,9 +51,12 @@ final class AdditemController extends AbstractController
                 // Création du stock
                 $stock = new Stock();
                 $stock->setQuantity((int) $form->get('quantity')->getData());
+
+                // Établir la relation bidirectionnelle
                 $stock->setArticle($item);
                 $item->setStock($stock);
 
+                // Persister d'abord l'article, puis le stock
                 $this->entityManager->persist($item);
                 $this->entityManager->persist($stock);
                 $this->entityManager->flush();

@@ -13,8 +13,8 @@ class Stock
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(targetEntity: Article::class)]
-    #[ORM\JoinColumn(name: "article_id", referencedColumnName: "id")]
+    #[ORM\OneToOne(targetEntity: Article::class, inversedBy: 'stock')]
+    #[ORM\JoinColumn(name: "article_id", referencedColumnName: "id", nullable: false)]
     private ?Article $article = null;
 
     #[ORM\Column]
@@ -33,6 +33,9 @@ class Stock
     public function setArticle(?Article $article): self
     {
         $this->article = $article;
+        if ($article !== null && $article->getStock() !== $this) {
+            $article->setStock($this);
+        }
         return $this;
     }
 

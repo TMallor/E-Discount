@@ -146,13 +146,14 @@ class Article
 
     public function setStock(?Stock $stock): self
     {
-        $this->stock = $stock;
-        
-        // Set the owning side of the relation if necessary
+        // Gérer le côté propriétaire de la relation
+        if ($stock === null && $this->stock !== null) {
+            $this->stock->setArticle(null);
+        }
         if ($stock !== null && $stock->getArticle() !== $this) {
             $stock->setArticle($this);
         }
-
+        $this->stock = $stock;
         return $this;
     }
 }

@@ -50,8 +50,8 @@ class UpdateArticleImageCommand extends Command
 
         // Créer le stock pour l'article
         $stock = new Stock();
-        $stock->setArticleId($article->getId());
-        $stock->setQuantity('15');
+        $stock->setArticle($article);
+        $stock->setQuantity(15);
         
         $this->entityManager->persist($stock);
         $this->entityManager->flush();

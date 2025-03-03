@@ -42,7 +42,7 @@ class AccountController extends AbstractController
             }
             
             // Supprimer le stock associé
-            $stock = $entityManager->getRepository(Stock::class)->findOneBy(['article_id' => $article->getId()]);
+            $stock = $entityManager->getRepository(Stock::class)->findOneBy(['article' => $article]);
             if ($stock) {
                 $entityManager->remove($stock);
             }

@@ -23,8 +23,6 @@
                 {% endif %}         
                 <input type="email" value="{{ last_username }}" name="_username" id="username" required autofocus placeholder="Email">
                 <input type="password" name="_password" id="password" required placeholder="Mot de passe">
-                
-                <a href="#">Mot de passe oublié ?</a>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 
                 <button type="submit">Connexion</button>
