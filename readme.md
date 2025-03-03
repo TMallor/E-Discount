@@ -16,7 +16,7 @@ E-Discount est une plateforme e-commerce spécialisée dans la vente d'articles 
 - PHP 8.1 ou supérieur
 - Composer
 - Symfony CLI
-- MySQL 5.7 ou supérieur
+- SQLite
 - Node.js et npm
 - Git
 
@@ -42,13 +42,11 @@ npm run build
 ```bash
 Pour accéder à la base de données utilisée dans ce projet, veuillez consulter le dépôt suivant :
 
-[Base de données E-Discount](https://github.com/TMallor/Base-de-donn-e-E-Discount)
-```
+https://github.com/TMallor/Base-de-donn-e-E-Discount
 
-### 3.1 Effectuer les migrations
-```bash
-php bin/console doctrine:migrations:migrate
+Installer la base de données et importer la dans le dossier var.
 
+⚠️ Penser à installer "composer" avant.
 ```
 
 ### 4. Démarrer le projet
@@ -60,21 +58,10 @@ symfony server:start
 npm run watch
 ```
 
-## Structure du projet
-```
-e-discount/
-├── assets/ # Fichiers front-end (JS, CSS)
-├── config/ # Configuration Symfony
-├── public/ # Fichiers publics
-│ ├── uploads/ # Images uploadées
-│ └── styles/ # CSS compilé
-├── src/
-│ ├── Controller/ # Contrôleurs
-│ ├── Entity/ # Entités
-│ ├── Form/ # Formulaires
-│ └── Repository/ # Repositories
-└── templates/ # Templates Twig
-```
+## Compte et mot de passe 
+
+- Admin : admin@admin.com - root0000
+
 
 ## Rôles utilisateurs
 - `ROLE_USER` : Utilisateur connecté
@@ -111,9 +98,8 @@ php bin/console make:migration
 php bin/console make:controller
 ```
 
-## Contribution
-1. Fork le projet
-2. Créer une branche (`git checkout -b feature/nouvelle-fonctionnalite`)
-3. Commit les changements (`git commit -am 'Ajout d'une nouvelle fonctionnalité'`)
-4. Push la branche (`git push origin feature/nouvelle-fonctionnalite`)
-5. Créer une Pull Request
+## Auteur
+
+- [@TMallor](https://github.com/TMallor)
+- [@eliongu](https://github.com/eliongu)
+- [@vincent4player](https://github.com/vincent4player)
